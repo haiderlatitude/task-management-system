@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     public function index() {
-        $tasks = Task::all();
+        $tasks = Task::query()->with('status')->get();
         $users = User::all();
         $statuses = Status::all();
         return view('admin.tasks', compact('tasks', 'users', 'statuses'));
@@ -36,7 +36,7 @@ class TaskController extends Controller
             $task = Task::find($req->taskid);
             $task->status_id = $req->statusid;
             $task->save();
-            
+
             return response([
                 'icon' => 'success', 'message' => 'Status updated successfully!',
             ]);
