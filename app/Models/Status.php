@@ -9,7 +9,7 @@ class Status extends Model
 {
     use HasFactory;
 
-    public function task() {
-        return $this->belongsTo(Task::class);
+    public function tasks() {
+        return $this->hasMany(Task::class);
     }
 }
