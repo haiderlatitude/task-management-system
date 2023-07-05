@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Pakistan Railway Advisory & Consultancy Services - Super Admin Login</title>
+    <title> - Super Admin Login</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{asset('frontend/assets/css/app.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/bundles/bootstrap-social/bootstrap-social.css')}}">
@@ -42,7 +42,7 @@
                                     {{Session::get('error')}}
                                 </div>
                             @endif
-                            <form method="POST" action="{{route('super_admin.login')}}" class="needs-validation" novalidate="">
+                            <form method="POST" action="" class="needs-validation" novalidate="">
                                 @csrf
                                 <div class="form-group">
                                     <label for="email">Email</label>
@@ -90,10 +90,6 @@
 <script src="{{asset('frontend/assets/js/scripts.js')}}"></script>
 <!-- Custom JS File -->
 <script src="{{asset('frontend/assets/js/custom.js')}}"></script>
-<script>
-    setTimeout(function () {
-        document.querySelector('.alert').remove();
-    }, 5000);
-</script>
+
 </body>
 </html>
