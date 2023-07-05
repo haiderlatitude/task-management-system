@@ -27,6 +27,7 @@ Route::middleware('role:admin')->prefix('admin')->group(function(){
     Route::get('/tasks', [TaskController::class, 'index'])->name('admin.tasks');
     Route::post('/add-task', [TaskController::class, 'store']);
     Route::post('/assign-task', [TaskController::class, 'assignTask']);
+    Route::post('/update-task-status', [TaskController::class, 'updateTaskStatus']);
 });
 
 Route::middleware('auth')->group(function () {

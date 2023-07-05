@@ -33,11 +33,16 @@ $(document).ready(function(){
                             Swal.fire({
                                 icon: response.icon,
                                 title: response.message,
+                                confirmButtonColor: '#3b82f6',
+                                preConfirm: ()=>{
+                                    window.location.href = '/admin/tasks';
+                                },
                             });
                         },
 
                         error: () => {
                             Swal.fire({
+                                timer: 2000,
                                 icon: 'error',
                                 title: 'Some error occured. Please try again later!',
                             });
@@ -100,6 +105,7 @@ $(document).ready(function(){
 
                 error: function(){
                     Swal.fire({
+                        timer: 2000,
                         icon: 'error',
                         title: 'Some error occured. Please try again later!',
                     });
@@ -108,4 +114,35 @@ $(document).ready(function(){
         }
 
     });
+
+    $.fn.updateStatus = function(id, token){
+        let statusid = $('#status').val();
+        $.ajax({
+            url: '/admin/update-task-status',
+            method: 'post',
+            headers: {
+                'X-CSRF-TOKEN': token,
+            },
+            data: {
+                taskid: id,
+                statusid: statusid,
+            },
+            success: function(response){
+                Swal.fire({
+                    timer: 2000,
+                    icon: response.icon,
+                    title: response.message,
+                    showConfirmButton: false,
+                });
+            },
+
+            error: function(response){
+                Swal.fire({
+                    icon: response.icon,
+                    title: response.message,
+                    confirmButtonColor: '#3b82f6',
+                });
+            },
+        });
+    };
 });

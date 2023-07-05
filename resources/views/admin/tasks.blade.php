@@ -36,7 +36,7 @@
                             @endforeach
                         </select>
 
-                        <button class="rounded-lg bg-blue-500 hover:bg-blue-600 text-white px-3 py-1">Assign</button>
+                        <button title="Assign" class="rounded-lg bg-blue-500 hover:bg-blue-600 text-white px-3 py-1">Assign</button>
                     </form>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                                         <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->description }}
                                         </td>
                                         <td class="text-start px-5 py-3 border border-slate-200 text-sm">
-                                            <select class="rounded" name="status" id="status">
+                                            <select class="rounded" name="status" id="status" onchange="$(this).updateStatus({{$task->id}}, '{{csrf_token()}}')">
                                                 @foreach ($statuses as $status)
                                                     <option value="{{$status->id}}" @if ($status->name === $task->status->name)
                                                         selected
@@ -88,12 +88,16 @@
                                             </select>
                                         </td>
                                         <td class="text-start px-5 py-3 border border-slate-200 text-sm">
-                                            @foreach ($task->users as $user)
-                                                {{$user->name}}
-                                                @if (!$user == $loop->last)
-                                                    ,
-                                                @endif
-                                            @endforeach
+                                            @if ($task->users->count() == 0)
+                                                <p>No one</p>
+                                            @else
+                                                @foreach ($task->users as $user)
+                                                    {{$user->name}}
+                                                    @if (!$user == $loop->last)
+                                                        ,
+                                                    @endif
+                                                @endforeach
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

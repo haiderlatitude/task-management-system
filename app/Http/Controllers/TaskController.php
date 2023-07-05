@@ -17,10 +17,34 @@ class TaskController extends Controller
     }
 
     public function assignTask(Request $req) {
-        $task = Task::find($req->taskid);
-        $user = User::find($req->userid);
-        if($task && $user){
+        try{
+            $task = Task::find($req->taskid);
+            $user = User::find($req->userid);
             $task->users()->attach($user);
+            return response([
+                'icon' => 'success', 'message' => 'Task assigned to '.$user->name.' successfully!',
+            ]);
+        } catch(\Exception $e){
+            return response([
+                'icon' => 'error', 'message' => 'Some error occured. Please try again later!',
+            ]);
+        }
+    }
+
+    public function updateTaskStatus(Request $req) {
+        try{
+            $task = Task::find($req->taskid);
+            $task->status_id = $req->statusid;
+            $task->save();
+            
+            return response([
+                'icon' => 'success', 'message' => 'Status updated successfully!',
+            ]);
+        }
+        catch(\Exception $e){
+            return response([
+                'icon' => 'error', 'message' => $e->getMessage(),
+            ]);
         }
     }
 
