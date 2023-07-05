@@ -19,6 +19,34 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <form id="assignTask">
+                        <p><b>Assign Tasks to Users</b></p>
+                        <input type="hidden" id="token" value="{{csrf_token()}}">
+                        <select class="w-full rounded-lg my-3" name="task" id="task">
+                            <option value="select-task" selected>-- Select Task --</option>
+                            @foreach ($tasks as $task)
+                                <option id="{{$task->id}}" value="{{$task->id}}">{{$task->name}}</option>
+                            @endforeach
+                        </select>
+    
+                        <select class="w-full rounded-lg my-3" name="user" id="user">
+                            <option value="select-user" selected>-- Select User --</option>
+                            @foreach ($users as $user)
+                                <option id="{{$user->id}}" value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+
+                        <button class="rounded-lg bg-blue-500 hover:bg-blue-600 text-white px-3 py-1">Assign</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
                     <table style="width: 100%;"
                         class="border-collapse border border-slate-200 rounded-lg overflow-hidden">
                         <thead>
@@ -36,20 +64,40 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($tasks as $task)
+                            @if (!$tasks)
                                 <tr>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->id }}
-                                    </td>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->name }}
-                                    </td>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->description }}
-                                    </td>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->status->name }}
-                                    </td>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">Assigned To
+                                    <td colspan="4" class="text-center px-5 py-3 border border-slate-200 text-sm"><b>No Data To Show At The Moment!</b>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($tasks as $task)
+                                    <tr>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->id }}
+                                        </td>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->name }}
+                                        </td>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->description }}
+                                        </td>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">
+                                            <select class="rounded" name="status" id="status">
+                                                @foreach ($statuses as $status)
+                                                    <option value="{{$status->id}}" @if ($status->name === $task->status->name)
+                                                        selected
+                                                    @endif >{{$status->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">
+                                            @foreach ($task->users as $user)
+                                                {{$user->name}}
+                                                @if (!$user == $loop->last)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

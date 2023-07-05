@@ -24,21 +24,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
+                            @if (!$users)
                                 <tr>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->id }}
-                                    </td>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->name }}
-                                    </td>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->email }}
-                                    </td>
-                                    <td class="text-start px-5 py-3 border border-slate-200 text-sm">
-                                        @foreach ($user->getRoleNames() as $role)
-                                            {{ $role }}
-                                        @endforeach
+                                    <td colspan="4" class="text-center px-5 py-3 border border-slate-200 text-sm"><b>No Data To Show At The Moment!</b>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->id }}
+                                        </td>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->name }}
+                                        </td>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->email }}
+                                        </td>
+                                        <td class="text-start px-5 py-3 border border-slate-200 text-sm">
+                                            @foreach ($user->getRoleNames() as $role)
+                                                {{ $role }}
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

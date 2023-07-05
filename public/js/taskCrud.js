@@ -51,4 +51,61 @@ $(document).ready(function(){
             }
         });
     }
+
+    $('form#assignTask').submit(function(e){
+        e.preventDefault();
+        let taskid, userid, token;
+        taskid = $('#task').val();
+        userid = $('#user').val();
+        token = $('#token').val();
+        if(taskid == 'select-task'){
+            Swal.fire({
+                icon: 'info',
+                title: 'Please select a task!',
+                confirmButtonColor: '#3b82f6',
+            });
+        }
+
+        else if(userid == 'select-user'){
+            Swal.fire({
+                icon: 'info',
+                title: 'Please select a user!',
+                confirmButtonColor: '#3b82f6',
+            });
+        }
+
+        else{
+            $.ajax({
+                url: '/admin/assign-task',
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                },
+
+                data: {
+                    taskid: taskid,
+                    userid: userid,
+                },
+
+                success: function(response){
+                    Swal.fire({
+                        icon: response.icon,
+                        title: response.message,
+                        confirmButtonColor: '#3b82f6',
+                        preConfirm: ()=>{
+                            window.location.href = '/admin/tasks';
+                        },
+                    });
+                },
+
+                error: function(){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Some error occured. Please try again later!',
+                    });
+                },
+            });
+        }
+
+    });
 });
