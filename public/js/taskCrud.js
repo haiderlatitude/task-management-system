@@ -117,6 +117,7 @@ $(document).ready(function(){
 
     $.fn.updateStatus = function(id, token){
         let statusid = $('#status').val();
+        
         $.ajax({
             url: '/admin/update-task-status',
             method: 'post',
