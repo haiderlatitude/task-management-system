@@ -1,9 +1,9 @@
 $(document).ready(function(){
     $.fn.addTask = function(token){
         let html = '<div style="width: 450px;">\
-                    <input type="text" style="width: 300px; margin: 3px;" class="rounded-lg" name="name" id="name" placeholder="Enter the name of task"><br>\
-                    <input type="text" style="width: 300px; margin: 3px;" class="rounded-lg" name="description" id="description" placeholder="Enter description"><br>\
-                    <input type="date" style="width: 300px; margin: 3px;" class="rounded-lg" name="due-date" id="due-date" placeholder="Due Date">\
+                    <input type="text" style="width: 300px; margin: 3px;" class="rounded-lg px-3 py-2 focus:outline-blue-400" name="name" id="name" placeholder="Enter the name of task"><br>\
+                    <input type="text" style="width: 300px; margin: 3px;" class="rounded-lg px-3 py-2 focus:outline-blue-400" name="description" id="description" placeholder="Enter description"><br>\
+                    <input type="date" style="width: 300px; margin: 3px;" class="rounded-lg px-3 py-2 focus:outline-blue-400" name="due-date" id="due-date" placeholder="Due Date">\
                     </div>';
 
         Swal.fire({
@@ -35,7 +35,7 @@ $(document).ready(function(){
                                 title: response.message,
                                 confirmButtonColor: '#3b82f6',
                                 preConfirm: ()=>{
-                                    window.location.href = '/admin/tasks';
+                                    window.location.href = '/admin/all-tasks';
                                 },
                             });
                         },
@@ -98,7 +98,7 @@ $(document).ready(function(){
                         title: response.message,
                         confirmButtonColor: '#3b82f6',
                         preConfirm: ()=>{
-                            window.location.href = '/admin/tasks';
+                            window.location.href = '/dashboard';
                         },
                     });
                 },
@@ -116,7 +116,7 @@ $(document).ready(function(){
     });
 
     $.fn.updateStatus = function(id, token){
-        let statusid = $('#status').val();
+        let statusid = $(this).val(); 
         
         $.ajax({
             url: '/admin/update-task-status',

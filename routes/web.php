@@ -24,10 +24,13 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('role:admin')->prefix('admin')->group(function(){
-    Route::get('/tasks', [TaskController::class, 'index'])->name('admin.tasks');
+    Route::get('/all-tasks', [TaskController::class, 'index']);
     Route::post('/add-task', [TaskController::class, 'store']);
+    Route::get('/task-form', [TaskController::class, 'formToAssignTask']);
     Route::post('/assign-task', [TaskController::class, 'assignTask']);
     Route::post('/update-task-status', [TaskController::class, 'updateTaskStatus']);
+
+    Route::get('/all-users', [AdminController::class, 'index']);
 });
 
 Route::middleware('auth')->group(function () {

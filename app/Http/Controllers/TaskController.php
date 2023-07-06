@@ -10,10 +10,15 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     public function index() {
-        $tasks = Task::query()->with('status')->get();
-        $users = User::all();
+        $tasks = Task::all();
         $statuses = Status::all();
-        return view('admin.tasks', compact('tasks', 'users', 'statuses'));
+        return view('admin.pages.users.tasks.index', compact('tasks', 'statuses'));
+    }
+
+    public function formToAssignTask() {
+        $tasks = Task::all();
+        $users = User::all();
+        return view('admin.pages.users.tasks.assign', compact('tasks', 'users'));
     }
 
     public function assignTask(Request $req) {

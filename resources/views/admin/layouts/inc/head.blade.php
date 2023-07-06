@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title> @yield('admin_title') -Task Management System </title>
+    <title> @yield('admin_title') - Task Management System </title>
     <link href="{{asset('admin/assets/img/pracs_site_logo.png')}}" rel="icon"
           style="min-height: 10px; max-height: 10px; max-width:10px; ">
     <!-- General CSS Files -->
@@ -24,4 +24,10 @@
     <link rel="stylesheet" href="{{asset('admin/assets/bundles/summernote/summernote-bs4.css')}}">
     {{--    <link rel="stylesheet" href="{{url('assets/bundles/jquery-selectric/selectric.css')}}">--}}
     <link rel="stylesheet" href="{{asset('admin/assets/bundles/jquery-pwstrength/jquery.pwstrength.min.js')}}">
+    {{-- Tailwind CSS --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- Sweet Alert 2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- jquery --}}
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 </head>
