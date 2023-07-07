@@ -10,24 +10,23 @@
     </div>
     <ul class="navbar-nav navbar-right">
         <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle text-dark nav-link-lg nav-link-user">
-                {{auth()->user()->name}}
+            <a data-toggle="dropdown" class="nav-link cursor-pointer dropdown-toggle text-dark nav-link-lg nav-link-user">
+                {{ucfirst(auth()->user()->name)}}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title">Hello {{auth()->user()->name}}</div>
-                <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-										fa-user"></i> Profile
-                </a>
-                <div class="dropdown-divider"></div>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-dropdown-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-dropdown-link>
-                </form>
+                <div class="mt-3 space-y-1">    
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+    
+                        <x-responsive-nav-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
+                </div>
             </div>
         </li>
     </ul>

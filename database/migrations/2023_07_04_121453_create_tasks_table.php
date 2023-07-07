@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('description');
             $table->unsignedBigInteger('status_id')->default(1);
             $table->foreign('status_id')->references('id')->on('statuses')->cascadeOnDelete();
-            $table->string('due_date');
+            $table->unsignedBigInteger('creator_id')->nullable();
+            $table->foreign('creator_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->dateTime('due_date');
             $table->timestamps();
         });
     }

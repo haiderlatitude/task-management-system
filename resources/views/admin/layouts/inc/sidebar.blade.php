@@ -20,9 +20,16 @@
             <li>
                 <a class="menu-toggle nav-link has-dropdown"><i data-feather="list"></i><span>Tasks</span></a>
                 <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="/admin/add-task">Add Task</a></li>
                     <li><a class="nav-link" href="/admin/all-tasks">All Tasks</a></li>
                     <li><a class="nav-link" href="/admin/task-form">Assign Task</a></li>
                 </ul>
+            </li>
+        </ul>
+        <ul class="sidebar-menu">
+            <li class="menu-header">Settings</li>
+            <li>
+                <a href="/edit-profile" class="nav-link"><i data-feather="user"></i><span>Profile</span></a>
             </li>
         </ul>
     </aside>

@@ -5,9 +5,7 @@
 @section('main-content')
     <div class="main-content">
         <div class="card py-3 px-3">
-            <button class="bg-blue-500 w-24 hover:bg-blue-600 text-white px-3 py-1 rounded-lg my-2" onclick="$(this).addTask('{{csrf_token()}}')">Add Task</button>
-
-            <table style="width: 100%;" class="border-collapse border border-slate-200 rounded-lg overflow-hidden">
+           <table style="width: 100%;" class="border-collapse border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                     <tr class="bg-gray-700 text-white">
                         <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Sr. No.
@@ -17,6 +15,8 @@
                         <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Description
                         </th>
                         <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Status
+                        </th>
+                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Created By
                         </th>
                         <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Assigned To
                         </th>
@@ -45,6 +45,13 @@
                                             @endif >{{$status->name}}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">
+                                    @if ($task->creator)
+                                        {{$task->creator->name}}
+                                    @else
+                                        Null
+                                    @endif
                                 </td>
                                 <td class="text-start px-5 py-3 border border-slate-200 text-sm">
                                     @if ($task->users->count() == 0)

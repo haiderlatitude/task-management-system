@@ -12,6 +12,8 @@
                         </th>
                         <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Email Address
                         </th>
+                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Role
+                        </th>
                         <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Assigned Task(s)
                         </th>
                     </tr>
@@ -32,12 +34,21 @@
                                 <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->email }}
                                 </td>
                                 <td class="text-start px-5 py-3 border border-slate-200 text-sm">
-                                    @foreach ($user->tasks as $task)
-                                        {{ $task->name }}
-                                        @if (!$task == $loop->last)
-                                            ,
-                                        @endif
+                                    @foreach ($user->roles as $role)
+                                        {{$role->name}}
                                     @endforeach
+                                </td>
+                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">
+                                    @if ($user->tasks->first() == null)
+                                        None
+                                    @else
+                                        @foreach ($user->tasks as $task)
+                                            {{ $task->name }}
+                                            @if (!$task == $loop->last)
+                                                ,
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
