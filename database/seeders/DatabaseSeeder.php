@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $adminRole = Role::create(['name' => 'admin']);
+        $userRole = Role::create(['name' => 'user']);
         $this->call(StatusSeeder::class);
         $admin = \App\Models\User::factory()->create([
             'name' => 'admin',
@@ -28,8 +30,6 @@ class DatabaseSeeder extends Seeder
             'password' => 'user',
         ]);
 
-        $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
         $admin->assignRole($adminRole);
         $user->assignRole($userRole);
     }

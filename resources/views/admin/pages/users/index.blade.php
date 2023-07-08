@@ -2,45 +2,41 @@
 @extends('admin.layouts.master')
 @section('main-content')
     <div class="main-content">
-        <div class="card py-3 px-3">
-            <table style="width: 100%;" class="border-collapse border border-slate-200 rounded-lg overflow-hidden">
-                <thead>
-                    <tr class="bg-gray-700 text-white">
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Sr. No.
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Name
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Email Address
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Role
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Assigned Task(s)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!$users)
-                        <tr>
-                            <td colspan="4" class="text-center px-5 py-3 border border-slate-200 text-sm"><b>No Data To Show At The Moment!</b>
-                            </td>
-                        </tr>
-                    @else
-                        @foreach ($users as $user)
-                            <tr class="text-dark">
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->id }}
+        <section class="section">
+            <div class="section-body">
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="mt-2"><b>All Users</b></h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped" id="table-1">
+                          <thead>
+                            <tr>
+                              <th class="text-center">
+                                #
+                              </th>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th>Tasks</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($users as $user)
+                            <tr>
+                                <td>
+                                  {{$user->id}}
                                 </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->name }}
+                                <td>{{ $user->name}}</td>
+                                <td>
+                                  {{$user->email}}
                                 </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $user->email }}
-                                </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">
-                                    @foreach ($user->roles as $role)
-                                        {{$role->name}}
-                                    @endforeach
-                                </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">
+                                <td>
                                     @if ($user->tasks->first() == null)
-                                        None
+                                    None
                                     @else
                                         @foreach ($user->tasks as $task)
                                             {{ $task->name }}
@@ -50,11 +46,24 @@
                                         @endforeach
                                     @endif
                                 </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
-        </div>
+                                <td>
+                                    <a href="#" class="btn btn-primary">
+                                        <i class="bi bi-pencil text-white"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-danger">
+                                        <i class="bi bi-trash text-white"></i>
+                                    </a>
+                                </td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
     </div>
 @endsection

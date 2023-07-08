@@ -12,25 +12,57 @@
                 <b>{{$errors->first()}}</b>
             </div>
         @endif
-        <div class="card py-3 px-5">
-            <form action="/admin/store-task" method="POST">
-                @csrf
-                <p><b>Add Details</b></p>
-                <div class="my-3 text-center">
-                    <label class="px-3 my-2 text-dark" for="name"><i class="bi bi-list-ul"></i></label>
-                    <input type="text" class="bg-gray-200 text-dark rounded-md px-3 my-2 py-2 w-50" name="name" id="name" placeholder="Name"> <br>
-                
-                    <label class="px-3 my-2 text-dark" for="description"><i class="bi bi-text-paragraph"></i></label>
-                    <input type="text" class="bg-gray-200 text-dark rounded-md px-3 my-2 py-2 w-50" name="description" id="description" placeholder="Description"> <br>
-                
-                    <label class="px-3 my-2 text-dark" for="date"><i class="bi bi-calendar"></i></label>
-                    <input type="date" class="bg-gray-200 text-dark rounded-md px-3 my-2 py-2 w-50" name="date" id="date" placeholder="Date"> <br>
-                    
-                    <div class="text-start">
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 my-2 rounded">Add</button>
+        <form action="/admin/store-task" method="POST">
+            @csrf
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mt-2"><b>Enter Details</b></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-list-ul"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-text-paragraph"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" name="description" id="description" placeholder="Description">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="date" class="form-control" name="date" id="date" placeholder="Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mx-4 my-4">
+                        <button class="bg-blue-500 hover:bg-blue-600 rounded text-white px-3 py-2">Add</button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 @endsection

@@ -66,7 +66,7 @@ class TaskController extends Controller
         $task->name = $req->name;
         $task->description = $req->description;
         $task->due_date = $req->date;
-        $task->creator_id = null;
+        $task->creator_id = auth()->user()->id;
         $task->save();
 
         return redirect('/admin/add-task')->with('message', 'Task has been saved successfully!');
