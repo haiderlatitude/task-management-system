@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('admin.layouts.inc.head')
-@section('style')
 @show
 
 <body>
@@ -21,7 +20,6 @@
 </div>
 
 @include('admin.layouts.inc.script')
-@section('script')
 @show
 
 

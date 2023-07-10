@@ -1,78 +1,90 @@
 @section('admin_title','All Tasks')
 @extends('admin.layouts.master')
-@section('style')
-@endsection
 @section('main-content')
     <div class="main-content">
-        <div class="card py-3 px-3">
-           <table style="width: 100%;" class="border-collapse border border-slate-200 rounded-lg overflow-hidden">
-                <thead>
-                    <tr class="bg-gray-700 text-white">
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Sr. No.
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Task Name
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Description
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Status
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Created By
-                        </th>
-                        <th scope="col" class="text-start px-5 py-3 border border-slate-200 text-sm">Assigned To
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!$tasks)
-                        <tr>
-                            <td colspan="4" class="text-center px-5 py-3 border border-slate-200 text-sm"><b>No Data To Show At The Moment!</b>
-                            </td>
-                        </tr>
-                    @else
-                        @foreach ($tasks as $task)
-                            <tr class="text-dark">
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->id }}
+        <section class="section">
+            <div class="section-body">
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="mt-2"><b>All Tasks</b></h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped" id="table-1">
+                          <thead>
+                            <tr>
+                              <th class="text-center">
+                                #
+                              </th>
+                              <th>Name</th>
+                              <th>Description</th>
+                              <th>Status</th>
+                              <th>Created By</th>
+                              <th>Assigned To</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($tasks as $task)
+                            <tr>
+                                <td>
+                                  {{$task->id}}
                                 </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->name }}
+                                <td>{{ $task->name}}</td>
+                                <td>
+                                  {{$task->description}}
                                 </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">{{ $task->description }}
-                                </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">
-                                    <select class="rounded-sm px-3 py-1 bg-white text-dark" name="status" id="status" onchange="$(this).updateStatus({{$task->id}}, '{{csrf_token()}}')">
+                                <td>
+                                    <select name="status" id="status" onchange="$(this).updateStatus({{$task->id}}, '{{csrf_token()}}')">
                                         @foreach ($statuses as $status)
                                             <option value="{{$status->id}}" @if ($status->name === $task->status->name)
                                                 selected
-                                            @endif >{{$status->name}}</option>
+                                            @endif>{{$status->name}}</option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">
-                                    @if ($task->creator)
-                                        {{$task->creator->name}}
+                                <td>
+                                    @if ($task->creator == null)
+                                    None
                                     @else
-                                        Null
+                                        {{ $task->creator->name }}
                                     @endif
                                 </td>
-                                <td class="text-start px-5 py-3 border border-slate-200 text-sm">
-                                    @if ($task->users->count() == 0)
-                                        <p>No one</p>
+                                <td>
+                                    @if ($task->users->first() == null)
+                                    None
                                     @else
                                         @foreach ($task->users as $user)
-                                            {{$user->name}}
+                                            {{ $user->name }}
                                             @if (!$user == $loop->last)
                                                 ,
                                             @endif
                                         @endforeach
                                     @endif
                                 </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
-        </div>
+                                <td>
+                                    <a href="#" class="btn btn-primary">
+                                        <i class="bi bi-pencil text-white"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-danger">
+                                        <i class="bi bi-trash text-white"></i>
+                                    </a>
+                                </td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
     </div>
-@endsection
 @section('script')
 <script src="{{asset('js/taskCrud.js')}}"></script>
+@endsection
 @endsection

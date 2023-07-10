@@ -45,12 +45,6 @@
                 <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data"> @csrf
                   <div class="row">
                     <div class="form-group">
-                      <label for="profile_picture">Profile Picture</label>
-                      <input type="file" name="profile_picture" id="profile_picture">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group">
                       <label for="name">Name</label>
                       <input id="name" type="text" class="form-control" name="name">
                     </div>
