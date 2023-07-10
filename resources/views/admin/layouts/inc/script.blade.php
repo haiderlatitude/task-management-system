@@ -18,7 +18,7 @@
 <script src="{{asset('admin/assets/js/scripts.js')}}"></script>
 <!-- Custom JS File -->
 <script src="{{asset('admin/assets/js/custom.js')}}"></script>
-<script src="{{asset('admin/https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <div id="ascrail2002" class="nicescroll-rails nicescroll-rails-vr"
      style="width: 8px; z-index: 892; cursor: grab; position: fixed; top: 0px; left: 242px; height: 303px; touch-action: none; opacity: 0; display: block;">
     <div class="nicescroll-cursors"

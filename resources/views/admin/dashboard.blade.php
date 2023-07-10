@@ -376,6 +376,4 @@
         </div>
       </section>
     </div>
-  @section('scripts')
-  @endsection
 @endsection

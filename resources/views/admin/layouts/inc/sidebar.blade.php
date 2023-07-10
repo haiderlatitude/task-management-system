@@ -27,6 +27,17 @@
             </li>
         </ul>
         <ul class="sidebar-menu">
+            <li class="menu-header">Roles and Permissions</li>
+            <li>
+                <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="users"></i><span>Roles & Permissions</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="#">Add Role</a></li>
+                    <li><a class="nav-link" href="#">All Roles</a></li>
+                    <li><a class="nav-link" href="#">Assign Role</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="sidebar-menu">
             <li class="menu-header">Settings</li>
             <li>
                 <a href="/edit-profile" class="nav-link"><i data-feather="user"></i><span>Profile</span></a>

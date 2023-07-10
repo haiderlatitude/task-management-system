@@ -1,13 +1,22 @@
 @section('admin_title','Assign Tasks')
 @extends('admin.layouts.master')
-@section('style')
-@endsection
 @section('main-content')
     <div class="main-content">
+        @if(session()->has('message'))
+            <div class="card py-3 px-5 text-success">
+                {{session('message')}}
+            </div>
+        @endif
+        @if ($errors->count() > 0)
+            <div class="card py-3 px-5 text-danger">
+                {{$errors->first()}}
+            </div>
+        @endif
+
         <div class="card py-3 px-5">
-            <form id="assignTask">
+            <form action="/admin/assign-task" method="POST">
+                @csrf
                 <p><b>Assign Tasks to Users</b></p>
-                <input type="hidden" id="token" value="{{csrf_token()}}">
                 <select class="w-full rounded-lg my-3 bg-gray-200 text-dark px-3 py-2" name="task" id="task">
                     <option value="select-task" selected>-- Select Task --</option>
                     @foreach ($tasks as $task)
@@ -26,7 +35,4 @@
             </form>
         </div>
     </div>
-@endsection
-@section('script')
-<script src="{{asset('js/taskCrud.js')}}"></script>
 @endsection

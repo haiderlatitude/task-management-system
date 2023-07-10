@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{asset('admin/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('admin/assets/css/components.css')}}">
     <!-- Custom style CSS -->
-    <link rel="stylesheet" href="{{asset('frontend/assets/css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
     {{--    <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/favicon.ico')}}"/>--}}
     <link rel="stylesheet" href="{{asset('admin/assets/bundles/izitoast/css/iziToast.min.css')}}">
     <link href="{{url('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css')}}" rel="stylesheet"/>
@@ -28,7 +28,5 @@
     <script src="https://cdn.tailwindcss.com"></script>
     {{-- Sweet Alert 2 --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    {{-- jquery --}}
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     {{-- Bootstrap icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous"></head>

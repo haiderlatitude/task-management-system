@@ -27,16 +27,12 @@ class TaskController extends Controller
 
     public function assignTask(Request $req) {
         try{
-            $task = Task::find($req->taskid);
-            $user = User::find($req->userid);
+            $task = Task::find($req->task);
+            $user = User::find($req->user);
             $task->users()->attach($user);
-            return response([
-                'icon' => 'success', 'message' => 'Task assigned to '.$user->name.' successfully!',
-            ]);
+            return redirect('/admin/all-tasks')->with('message', 'Task has been assigned successfully!');
         } catch(\Exception $e){
-            return response([
-                'icon' => 'error', 'message' => 'Some error occured. Please try again later!',
-            ]);
+            return redirect('/admin/assign-task')->withErrors('Something went wrong!');
         }
     }
 
@@ -46,14 +42,11 @@ class TaskController extends Controller
             $task->status_id = $req->statusid;
             $task->save();
 
-            return response([
-                'icon' => 'success', 'message' => 'Status updated successfully!',
-            ]);
+            return redirect('/admin/all-tasks')->with('message', 'Task Status has been changed successfully!');
+
         }
         catch(\Exception $e){
-            return response([
-                'icon' => 'error', 'message' => 'Some error occured!',
-            ]);
+            return redirect('/admin/all-tasks')->withErrors('Something went wrong!');
         }
     }
 

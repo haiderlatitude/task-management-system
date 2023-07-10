@@ -2,6 +2,16 @@
 @extends('admin.layouts.master')
 @section('main-content')
     <div class="main-content">
+        @if(session()->has('message'))
+            <div class="card py-3 px-5 text-success">
+                <b>{{session('message')}}</b>
+            </div>
+        @endif
+        @if ($errors->count() > 0)
+          <div class="card py-3 px-5 text-danger">
+            <b>{{$errors->first()}}</b>
+          </div>
+        @endif
         <section class="section">
             <div class="section-body">
               <div class="row">
@@ -37,13 +47,18 @@
                                   {{$task->description}}
                                 </td>
                                 <td>
-                                    <select name="status" id="status" onchange="$(this).updateStatus({{$task->id}}, '{{csrf_token()}}')">
+                                    <form action="/admin/update-task-status" method="POST">
+                                      @csrf
+                                      <input type="hidden" name="taskid" id="taskid" value="{{$task->id}}">
+                                      <select name="statusid" id="statusid">
                                         @foreach ($statuses as $status)
                                             <option value="{{$status->id}}" @if ($status->name === $task->status->name)
                                                 selected
                                             @endif>{{$status->name}}</option>
                                         @endforeach
-                                    </select>
+                                      </select>
+                                      <button class="bg-blue-500 hover:bg-blue-600 text-sm btn-primary mx-2 px-2 py-1 rounded-sm"><i class="bi bi-upload"></i></button>
+                                    </form>
                                 </td>
                                 <td>
                                     @if ($task->creator == null)
@@ -85,6 +100,6 @@
           </section>
     </div>
 @section('script')
-<script src="{{asset('js/taskCrud.js')}}"></script>
+<script src="public/js/taskCrud.js"></script>
 @endsection
 @endsection
