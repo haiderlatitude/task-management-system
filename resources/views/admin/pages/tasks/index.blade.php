@@ -97,9 +97,6 @@
                 </div>
               </div>
             </div>
-          </section>
+        </section>
     </div>
-@section('script')
-<script src="public/js/taskCrud.js"></script>
-@endsection
 @endsection

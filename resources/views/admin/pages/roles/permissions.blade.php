@@ -18,7 +18,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="mt-2"><b>All Roles</b></h4>
+                  <h4 class="mt-2"><b>All Permissions</b></h4>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -29,46 +29,27 @@
                             #
                           </th>
                           <th>Name</th>
-                          <th>Permissions</th>
-                          <th>Assigned To</th>
-                          <th>Actions</th>
+                          <th>Assigned To Role</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($roles as $role)
+                        @foreach ($permissions as $permission)
                         <tr>
                             <td>
-                              {{ $role->id }}
+                              {{ $permission->id }}
                             </td>
-                            <td>{{ $role->name }}</td>
+                            <td>{{ $permission->name }}</td>
                             <td>
-                                @if ($role->permissions->first() == null)
+                                @if ($permission->roles->first() == null)
                                     None
                                 @else
-                                    @foreach ($role->permissions as $permission)
-                                        {{$permission->name}}
-                                        @if(!$permission == $loop->last)
+                                    @foreach ($permission->roles as $role)
+                                        {{$role->name}}
+                                        @if(!$role == $loop->last)
                                             ,
                                         @endif
                                     @endforeach
                                 @endif
-                            </td>
-                            <td>
-                                @if ($role->users->first() == null)
-                                    None
-                                @else
-                                    @foreach ($role->users as $user)
-                                        {{$user->name}}
-                                        @if(!$user == $loop->last)
-                                            ,
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </td>
-                            <td>
-                                <a href="/admin/edit-role/{{$role->id}}" class="btn btn-primary">
-                                    <i class="bi bi-pencil text-white"></i>
-                                </a>
                             </td>
                           </tr>
                         @endforeach

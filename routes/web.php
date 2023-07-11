@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleNPermissionController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,7 +40,24 @@ Route::middleware('auth')->group(function () {
         Route::post('/assign-task', [TaskController::class, 'assignTask']);
         Route::post('/update-task-status', [TaskController::class, 'updateTaskStatus']);
         Route::get('/all-users', [AdminController::class, 'index']);
-        Route::delete('/delete-profile', [ProfileController::class, 'destroy']);
+
+        // Roles and Permissions 
+        Route::get('/all-roles', [RoleNPermissionController::class, 'allRoles']);
+        Route::get('/add-role', [RoleNPermissionController::class, 'addRole']);
+        Route::get('/edit-role/{roleId}', [RoleNPermissionController::class, 'editRole']);
+        Route::post('/store-role', [RoleNPermissionController::class, 'store']);
+        Route::post('/store-edited-role/{roleId}', [RoleNPermissionController::class, 'storeEditedRole']);
+        Route::get('/assign-role', [RoleNPermissionController::class, 'assignRole']);
+        Route::post('/assign-role-to-user', [RoleNPermissionController::class, 'assignRoleToUser']);
+        Route::get('/all-permissions', [RoleNPermissionController::class, 'allPermissions']);
+        Route::get('/add-permission', [RoleNPermissionController::class, 'addPermission']);
+        Route::post('/store-permission', [RoleNPermissionController::class, 'storePermission']);
+        Route::get('/assign-permission', [RoleNPermissionController::class, 'assignPermission']);
+        Route::post('/assign-permission-to-role', [RoleNPermissionController::class, 'assignPermissionToRole']);
+    });
+
+    Route::prefix('users')->group(function(){
+        // Route::get('/{username}/my-tasks', [UserController::class, 'userTasks']);
     });
     
     Route::get('/edit-profile', [ProfileController::class, 'edit']);

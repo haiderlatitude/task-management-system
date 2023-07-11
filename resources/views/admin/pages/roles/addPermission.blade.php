@@ -12,7 +12,7 @@
                 <b>{{$errors->first()}}</b>
             </div>
         @endif
-        <form action="/admin/store-role" method="POST">
+        <form action="/admin/store-permission" method="POST">
             @csrf
             <div>
                 <div class="card">

@@ -1,4 +1,4 @@
-@section('admin_title','Assign Tasks')
+@section('admin_title','Assign Roles')
 @extends('admin.layouts.master')
 @section('main-content')
     <div class="main-content">
@@ -14,13 +14,13 @@
         @endif
 
         <div class="card py-3 px-5">
-            <form action="/admin/assign-task" method="POST">
+            <form action="/admin/assign-role-to-user" method="POST">
                 @csrf
-                <p><b>Assign Tasks to Users</b></p>
-                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="task" id="task">
-                    <option value="select-task" selected>-- Select Task --</option>
-                    @foreach ($tasks as $task)
-                        <option id="{{$task->id}}" value="{{$task->id}}">{{$task->name}}</option>
+                <p><b>Assign Roles to Users</b></p>
+                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="role" id="role">
+                    <option value="select-task" selected>-- Select Role --</option>
+                    @foreach ($roles as $role)
+                        <option id="{{$role->id}}" value="{{$role->id}}">{{$role->name}}</option>
                     @endforeach
                 </select>
         
