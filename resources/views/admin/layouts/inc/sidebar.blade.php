@@ -55,7 +55,8 @@
             <li>
                 <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="users"></i><span>Roles & Permissions</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="#">My Roles & Permissions</a></li>
+                    <li><a class="nav-link" href="/users/{{auth()->user()->name}}/my-roles">My Roles</a></li>
+                    <li><a class="nav-link" href="/users/{{auth()->user()->name}}/my-permissions">My Permissions</a></li>
                 </ul>
             </li>
         </ul>

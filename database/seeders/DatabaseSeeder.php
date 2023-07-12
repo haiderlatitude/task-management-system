@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -19,6 +21,9 @@ class DatabaseSeeder extends Seeder
         $admin = \App\Models\User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
+            'dob' => '1990-01-01',
+            'phone' => '+92-312-3456789',
+            'cnic' => '34101-1234567-1',
             'email_verified_at' => now(),
             'password' => 'admin',
         ]);
@@ -26,6 +31,9 @@ class DatabaseSeeder extends Seeder
         $user = \App\Models\User::factory()->create([
             'name' => 'user',
             'email' => 'user@gmail.com',
+            'dob' => '1990-01-01',
+            'phone' => '+92-312-3456789',
+            'cnic' => '34101-1234567-1',
             'email_verified_at' => now(),
             'password' => 'user',
         ]);

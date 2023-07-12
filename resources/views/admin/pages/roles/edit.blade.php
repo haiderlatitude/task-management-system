@@ -1,4 +1,4 @@
-@section('admin_title','Add Role')
+@section('admin_title','Edit Role')
 @extends('admin.layouts.master')
 @section('main-content')
     <div class="main-content">
@@ -54,7 +54,7 @@
                             @else
                                 @foreach ($role->users as $user)
                                     <div class="mx-3 my-2 text-dark">
-                                        <input type="checkbox" class="mx-2" name="users[]" id="{{$user->id}}" value="{{$user->id}}" @if ($user->name == 'admin')
+                                        <input type="checkbox" class="mx-2" name="users[]" id="{{$user->id}}" value="{{$user->id}}" @if ($role->name == 'admin' && $user->name == 'admin')
                                             disabled
                                         @endif>
                                         <label for="{{$user->id}}">{{$user->name}}</label>

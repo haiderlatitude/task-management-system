@@ -80,12 +80,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-primary">
-                                        <i class="bi bi-pencil text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger">
-                                        <i class="bi bi-trash text-white"></i>
-                                    </a>
+                                    <form action="/admin/edit-task" method="POST" class="btn btn-primary">@csrf
+                                      <input type="hidden" name="taskid" id="taskid" value="{{$task->id}}">
+                                        <button class="bi bi-pencil text-white"></button>
+                                    </form>
                                 </td>
                               </tr>
                             @endforeach

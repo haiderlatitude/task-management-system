@@ -2,6 +2,16 @@
 @extends('admin.layouts.master')
 @section('main-content')
     <div class="main-content">
+      @if(session()->has('message'))
+            <div class="card py-3 px-5 text-success">
+                <b>{{session('message')}}</b>
+            </div>
+        @endif
+        @if($errors->count() > 0)
+            <div class="card py-3 px-5 text-danger">
+                <b>{{$errors->first()}}</b>
+            </div>
+        @endif
         <section class="section">
             <div class="section-body">
               <div class="row">
@@ -20,6 +30,9 @@
                               </th>
                               <th>Name</th>
                               <th>Email</th>
+                              <th>Date of Birth</th>
+                              <th>Phone Number</th>
+                              <th>CNIC</th>
                               <th>Tasks</th>
                               <th>Action</th>
                             </tr>
@@ -30,9 +43,20 @@
                                 <td>
                                   {{$user->id}}
                                 </td>
-                                <td>{{ $user->name}}</td>
+                                <td>
+                                  {{$user->name}}
+                                </td>
                                 <td>
                                   {{$user->email}}
+                                </td>
+                                <td>
+                                  {{$user->dob}}
+                                </td>
+                                <td>
+                                  {{$user->phone}}
+                                </td>
+                                <td>
+                                  {{$user->cnic}}
                                 </td>
                                 <td>
                                     @if ($user->tasks->first() == null)
@@ -47,9 +71,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-primary">
-                                        <i class="bi bi-pencil text-white"></i>
-                                    </a>
+                                    <form action="/admin/edit-user" class="btn btn-primary" method="POST">@csrf
+                                      <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
+                                        <button class="bi bi-pencil text-white"></button>
+                                    </form>
                                     <a href="#" class="btn btn-danger">
                                         <i class="bi bi-trash text-white"></i>
                                     </a>

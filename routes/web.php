@@ -33,13 +33,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware('role:admin')->prefix('admin')->group(function(){
+        // Tasks
         Route::get('/all-tasks', [TaskController::class, 'index']);
         Route::get('/add-task', [TaskController::class, 'formToAddTask']);
         Route::get('/task-form', [TaskController::class, 'formToAssignTask']);
         Route::post('/store-task', [TaskController::class, 'store']);
+        Route::post('/edit-task', [TaskController::class, 'editTask']);
+        Route::post('/store-edited-task', [TaskController::class, 'storeEditedTask']);
         Route::post('/assign-task', [TaskController::class, 'assignTask']);
         Route::post('/update-task-status', [TaskController::class, 'updateTaskStatus']);
+
+        // Users
         Route::get('/all-users', [AdminController::class, 'index']);
+        Route::post('/edit-user', [AdminController::class, 'editUser']);
+        Route::post('/store-edited-user', [AdminController::class, 'storeEditedUser']);
 
         // Roles and Permissions 
         Route::get('/all-roles', [RoleNPermissionController::class, 'allRoles']);
@@ -57,7 +64,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('users')->group(function(){
-        // Route::get('/{username}/my-tasks', [UserController::class, 'userTasks']);
+        Route::get('/{username}/my-tasks', [UserController::class, 'userTasks']);
+        Route::post('/{username}/update-details', [TaskController::class, 'updateTaskStatus']);
+        Route::get('/{username}/my-roles', [UserController::class, 'userRoles']);
+        Route::get('/{username}/my-permissions', [UserController::class, 'userPermissions']);
     });
     
     Route::get('/edit-profile', [ProfileController::class, 'edit']);
