@@ -31,6 +31,7 @@
                               <th>Name</th>
                               <th>Description</th>
                               <th>Status</th>
+                              <th>Due Date</th>
                               <th>Created By</th>
                               <th>Assigned To</th>
                               <th>Actions</th>
@@ -59,6 +60,9 @@
                                       </select>
                                       <button class="bg-blue-500 hover:bg-blue-600 text-sm btn-primary mx-2 px-2 py-1 rounded-sm"><i class="bi bi-upload"></i></button>
                                     </form>
+                                </td>
+                                <td>
+                                  {{date('d m Y', strtotime($task->due_date))}}
                                 </td>
                                 <td>
                                     @if ($task->creator == null)

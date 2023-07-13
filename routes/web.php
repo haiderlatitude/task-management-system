@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/all-users', [AdminController::class, 'index']);
         Route::post('/edit-user', [AdminController::class, 'editUser']);
         Route::post('/store-edited-user', [AdminController::class, 'storeEditedUser']);
+        Route::post('/delete-user', [AdminController::class, 'deleteUser']);
+        Route::post('/restore-user', [AdminController::class, 'restoreUser']);
 
         // Roles and Permissions 
         Route::get('/all-roles', [RoleNPermissionController::class, 'allRoles']);

@@ -34,6 +34,7 @@
                               <th>Phone Number</th>
                               <th>CNIC</th>
                               <th>Tasks</th>
+                              <th>Deleted At</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -71,13 +72,32 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <form action="/admin/edit-user" class="btn btn-primary" method="POST">@csrf
+                                  @if($user->deleted_at == null)
+                                    Active
+                                  @else
+                                    {{date('d-m-Y | g:i:sa', strtotime($user->deleted_at))}}
+                                  @endif
+                                </td>
+                                <td>
+                                    <form action="/admin/edit-user" class="btn btn-primary @if ($user->hasRole('admin'))
+                                      col-10
+                                    @endif" method="POST">@csrf
                                       <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
                                         <button class="bi bi-pencil text-white"></button>
                                     </form>
-                                    <a href="#" class="btn btn-danger">
-                                        <i class="bi bi-trash text-white"></i>
-                                    </a>
+                                    @if ($user->deleted_at == null)
+                                      <form action="/admin/delete-user" method="POST" @if ($user->hasRole('admin'))
+                                        hidden
+                                      @endif class="btn btn-danger">@csrf
+                                        <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
+                                          <button><i class="bi bi-trash text-white"></i></button>
+                                      </form>
+                                    @else
+                                      <form action="/admin/restore-user" method="POST" class="btn btn-primary">@csrf
+                                        <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
+                                          <button><i class="bi bi-bootstrap-reboot text-white"></i></button>
+                                      </form>
+                                    @endif
                                 </td>
                               </tr>
                             @endforeach

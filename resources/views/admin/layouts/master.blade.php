@@ -14,8 +14,6 @@
     @section('main-content')
     @show
     <!-- End Main Content -->
-
-    @include('admin.layouts.inc.footer')
     </div>
 </div>
 
