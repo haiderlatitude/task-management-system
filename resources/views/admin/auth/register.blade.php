@@ -41,6 +41,13 @@
               <div class="card-header">
                 <h4>Register</h4>
               </div>
+              <div class="text-danger mx-4">
+                @if ($errors->count() > 0)
+                  @foreach ($errors->all() as $error)
+                    <li><b>{{$error}}</b></li>
+                  @endforeach
+                @endif
+              </div>
               <div class="card-body">
                 <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data"> @csrf
                   <div class="row">
