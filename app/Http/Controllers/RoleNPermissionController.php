@@ -21,6 +21,8 @@ class RoleNPermissionController extends Controller
 
     public function store(Request $request) {
         try{
+            if($request->name == '')
+                return back()->withErrors('Role name cannot be empty!');
             $role = Role::findByName($request->name);
             return back()->withErrors('The role of "'.ucfirst($role->name).'" already exists!');
         }
@@ -39,6 +41,8 @@ class RoleNPermissionController extends Controller
         $role = Role::findById($roleId);
         if($role->name == 'admin')
             $role->name = 'admin';
+        elseif($request->name == '')
+            return redirect('/admin/all-roles')->withErrors('Role name cannot be empty!');
         else
             $role->name = $request->name;
         $role->syncPermissions($request->permissions);
@@ -61,6 +65,8 @@ class RoleNPermissionController extends Controller
 
     public function assignRoleToUser(Request $request) {
         try{
+            if($request->role == 'select-role' || $request->user == 'select-user')
+                return redirect('/admin/all-roles')->withErrors('Please select both a Role and a User!');
             $role = Role::find($request->role);
             $user = User::find($request->user);
             $user->assignRole($role);
@@ -81,6 +87,8 @@ class RoleNPermissionController extends Controller
 
     public function storePermission(Request $request) {
         try{
+            if($request->name == '')
+                return back()->withErrors('Permission name cannot be empty!');
             Permission::create(['name' => Str::slug($request->name)]);
             return redirect('/admin/all-permissions')->with('message', 'Permission has been added successfully!');
 
@@ -96,6 +104,8 @@ class RoleNPermissionController extends Controller
     }
 
     public function assignPermissionToRole(Request $request) {
+        if($request->permission == 'select-permission' || $request->role == 'select-role')
+            return redirect('/admin/all-roles')->withErrors('Please select a Permission and a Role!');
         $role = Role::findById($request->role);
         $permission = Permission::findById($request->permission);
         $role->givePermissionTo($permission);

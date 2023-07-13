@@ -18,7 +18,7 @@
                 @csrf
                 <p><b>Assign Roles to Users</b></p>
                 <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="role" id="role">
-                    <option value="select-task" selected>-- Select Role --</option>
+                    <option value="select-role" selected>-- Select Role --</option>
                     @foreach ($roles as $role)
                         <option id="{{$role->id}}" value="{{$role->id}}">{{$role->name}}</option>
                     @endforeach

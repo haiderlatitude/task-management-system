@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -54,6 +55,9 @@ class TaskController extends Controller
         if($req->name == '' || $req->description == '' || $req->date == ''){
             return redirect('/admin/add-task')->withErrors('Please fill out all fields!');
         }
+        
+        if(Carbon::parse($req->date)->lessThan(now()))
+            return back()->withErrors('Due Date cannot be from the past!');
 
         $task = new Task();
         $task->name = $req->name;
@@ -71,6 +75,9 @@ class TaskController extends Controller
     }
 
     public function storeEditedTask(Request $request) {
+        if($request->name == '' || $request->description == '')
+            return redirect('/admin/all-tasks')->withErrors('Name or Description fields cannot be empty!');
+            
         $task = Task::find($request->taskid);
         $task->name = $request->name;
         $task->description = $request->description;
