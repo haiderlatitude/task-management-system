@@ -10,22 +10,26 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    // List all tasks with status
     public function index() {
         $tasks = Task::all();
         $statuses = Status::all();
         return view('admin.pages.tasks.index', compact('tasks', 'statuses'));
     }
 
+    // View for assinging task to user
     public function formToAssignTask() {
         $tasks = Task::all();
         $users = User::all();
         return view('admin.pages.tasks.assign', compact('tasks', 'users'));
     }
 
+    // View for adding task
     public function formToAddTask() {
         return view('admin.pages.tasks.add');
     }
 
+    // Assign Task
     public function assignTask(Request $req) {
         try{
             $task = Task::find($req->task);
@@ -37,6 +41,7 @@ class TaskController extends Controller
         }
     }
 
+    // Update task status
     public function updateTaskStatus(Request $req) {
         try{
             $task = Task::find($req->taskid);
@@ -51,6 +56,7 @@ class TaskController extends Controller
         }
     }
 
+    // Store task details
     public function store(Request $req) {
         if($req->name == '' || $req->description == '' || $req->date == ''){
             return redirect('/admin/add-task')->withErrors('Please fill out all fields!');
@@ -69,11 +75,13 @@ class TaskController extends Controller
         return redirect('/admin/add-task')->with('message', 'Task has been saved successfully!');
     }
 
+    // View for editing task
     public function editTask(Request $request) {
         $task = Task::find($request->taskid);
         return view('admin.pages.tasks.edit', compact('task'));
     }
 
+    // Store edited task details
     public function storeEditedTask(Request $request) {
         if($request->name == '' || $request->description == '')
             return redirect('/admin/all-tasks')->withErrors('Name or Description fields cannot be empty!');

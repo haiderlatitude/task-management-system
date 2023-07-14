@@ -22,6 +22,18 @@
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
+                        <form action="/admin/deleted-or-active-users" method="POST">
+                          @csrf
+                          <div class="inline mr-3">
+                            <input type="checkbox" name="active" id="active">
+                            <label for="active">Active Users</label>
+                          </div>
+                          <div class="inline mx-3">
+                            <input type="checkbox" name="deleted" id="deleted">
+                            <label for="deleted">Deleted Users</label>
+                          </div>
+                          <button class="bg-blue-500 hover:bg-blue-600 rounded-md text-xs text-white px-2 py-1 mx-3">Show</button>
+                        </form>
                         <table class="table table-striped" id="table-1">
                           <thead>
                             <tr>

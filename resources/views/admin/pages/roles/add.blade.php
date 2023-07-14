@@ -31,6 +31,9 @@
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Name must be unique">
                             </div>
                         </div>
+                        <div class="text-sm text-dark">
+                            *You can also enter comma separated role names at once!
+                        </div>
                     </div>
                     <div class="mx-4 my-4">
                         <button class="bg-blue-500 hover:bg-blue-600 rounded text-white px-3 py-2">Add</button>

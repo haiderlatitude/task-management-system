@@ -14,7 +14,11 @@
         @if(auth()->user()->hasRole('admin'))
         <ul class="sidebar-menu">
             <li>
-                <a href="/admin/all-users" class="nav-link"><i data-feather="user"></i><span>Users</span></a>
+                <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="users"></i><span>Users</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="/admin/all-users">All Users</a></li>
+                    <li><a class="nav-link" href="/admin/add-user">Add User</a></li>
+                </ul>
             </li>
         </ul>
         <ul class="sidebar-menu">
@@ -30,7 +34,7 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Roles and Permissions</li>
             <li>
-                <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="users"></i><span>Roles & Permissions</span></a>
+                <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="shield"></i><span>Roles & Permissions</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="/admin/all-roles">All Roles</a></li>
                     <li><a class="nav-link" href="/admin/add-role">Add Role</a></li>
@@ -53,7 +57,7 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Roles and Permissions</li>
             <li>
-                <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="users"></i><span>Roles & Permissions</span></a>
+                <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="shield"></i><span>Roles & Permissions</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="/users/{{auth()->user()->name}}/my-roles">My Roles</a></li>
                     <li><a class="nav-link" href="/users/{{auth()->user()->name}}/my-permissions">My Permissions</a></li>
@@ -64,7 +68,7 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Settings</li>
             <li>
-                <a href="/edit-profile" class="nav-link"><i data-feather="user"></i><span>Profile</span></a>
+                <a href="/edit-profile" class="nav-link"><i data-feather="settings"></i><span>Profile</span></a>
             </li>
         </ul>
     </aside>

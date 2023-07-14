@@ -22,17 +22,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/loginForm', function(){
+Route::get('/loginForm', function () {
     return view('admin.auth.login');
 });
-Route::get('/registerForm', function(){
+Route::get('/registerForm', function () {
     return view('admin.auth.register');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::middleware('role:admin')->prefix('admin')->group(function(){
+    Route::middleware('role:admin')->prefix('admin')->group(function () {
         // Tasks
         Route::get('/all-tasks', [TaskController::class, 'index']);
         Route::get('/add-task', [TaskController::class, 'formToAddTask']);
@@ -45,10 +45,13 @@ Route::middleware('auth')->group(function () {
 
         // Users
         Route::get('/all-users', [AdminController::class, 'index']);
+        Route::get('/add-user', [AdminController::class, 'addUser']);
+        Route::post('/store-user', [AdminController::class, 'storeUser']);
         Route::post('/edit-user', [AdminController::class, 'editUser']);
         Route::post('/store-edited-user', [AdminController::class, 'storeEditedUser']);
         Route::post('/delete-user', [AdminController::class, 'deleteUser']);
         Route::post('/restore-user', [AdminController::class, 'restoreUser']);
+        Route::post('/deleted-or-active-users', [AdminController::class, 'deletedOrActiveUsers']);
 
         // Roles and Permissions 
         Route::get('/all-roles', [RoleNPermissionController::class, 'allRoles']);
@@ -65,13 +68,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/assign-permission-to-role', [RoleNPermissionController::class, 'assignPermissionToRole']);
     });
 
-    Route::prefix('users')->group(function(){
+    Route::prefix('users')->group(function () {
         Route::get('/{username}/my-tasks', [UserController::class, 'userTasks']);
         Route::post('/{username}/update-details', [TaskController::class, 'updateTaskStatus']);
         Route::get('/{username}/my-roles', [UserController::class, 'userRoles']);
         Route::get('/{username}/my-permissions', [UserController::class, 'userPermissions']);
     });
-    
+
     Route::get('/edit-profile', [ProfileController::class, 'edit']);
     Route::patch('/update-profile', [ProfileController::class, 'update']);
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -79,4 +82,4 @@ Route::middleware('auth')->group(function () {
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

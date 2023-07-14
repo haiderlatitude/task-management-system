@@ -10,41 +10,59 @@ use Spatie\Permission\Models\Role;
 
 class RoleNPermissionController extends Controller
 {
+    // Listing all roles
     public function allRoles() {
         $roles = Role::all();
         return view('admin.pages.roles.index', compact('roles'));
     }
 
+    // View for adding role
     public function addRole() {
         return view('admin.pages.roles.add');
     }
 
+    // Store new role details
     public function store(Request $request) {
         try{
+            $errors = '';
             if($request->name == '')
                 return back()->withErrors('Role name cannot be empty!');
-            $role = Role::findByName($request->name);
-            return back()->withErrors('The role of "'.ucfirst($role->name).'" already exists!');
+            
+            $roles = explode(',', $request->name);
+            foreach($roles as $role){
+                try{
+                    if($role != '')
+                        Role::create(['name' => trim(preg_replace('/[^A-Za-z ]/', '', $role))]);
+                }
+                catch(\Exception $e){
+                    $errors .= $e->getMessage().' ';
+                }
+            }
+
+            if($errors != '')
+                return redirect('/admin/all-roles')->withErrors($errors);
+
+            return redirect('/admin/all-roles')->with('message', 'All role(s) have been added successfully!');
         }
         catch(\Exception $e){
-            Role::create(['name' => $request->name]);
-            return redirect('/admin/all-roles')->with('message', 'Role has been created successfully!');
+            return back()->withErrors('Some error occured please try again later!');
         }
     }
 
+    // View for editing role details
     public function editRole($roleId) {
         $role = Role::findById($roleId);
         return view('admin.pages.roles.edit', compact('role'));
     }
 
+    // Store edited role details
     public function storeEditedRole(Request $request, $roleId) {
         $role = Role::findById($roleId);
-        if($role->name == 'admin')
-            $role->name = 'admin';
-        elseif($request->name == '')
-            return redirect('/admin/all-roles')->withErrors('Role name cannot be empty!');
-        else
+        if($role->name != 'admin')
             $role->name = $request->name;
+        if($request->name == '')
+            return redirect('/admin/all-roles')->withErrors('Role name cannot be empty!');
+
         $role->syncPermissions($request->permissions);
         if(!$request->users == null){
             foreach($request->users as $userId){
@@ -57,12 +75,14 @@ class RoleNPermissionController extends Controller
         return redirect('/admin/all-roles')->with('message', 'Role details have been updated successfully!');
     }
 
+    // View for assigning role to a user
     public function assignRole() {
         $roles = Role::all();
         $users = User::all();
         return view('admin.pages.roles.assign', compact('roles', 'users'));
     }
 
+    // Assign role to a user
     public function assignRoleToUser(Request $request) {
         try{
             if($request->role == 'select-role' || $request->user == 'select-user')
@@ -76,33 +96,52 @@ class RoleNPermissionController extends Controller
         }
     }
 
+    // Listing all permissions
     public function allPermissions() {
         $permissions = Permission::all();
         return view('admin.pages.roles.permissions', compact('permissions'));
     }
 
+    // View for adding a permission
     public function addPermission() {
         return view('admin.pages.roles.addPermission');
     }
 
+    // Store a single or multiple permissions' details
     public function storePermission(Request $request) {
         try{
+            $errors = '';
             if($request->name == '')
                 return back()->withErrors('Permission name cannot be empty!');
-            Permission::create(['name' => Str::slug($request->name)]);
-            return redirect('/admin/all-permissions')->with('message', 'Permission has been added successfully!');
+            
+            $permissionNames = explode(',', $request->name);
+            foreach($permissionNames as $permissionName){
+                try{
+                    if($permissionName != '')
+                        Permission::create(['name' => Str::slug($permissionName)]);
+                }
+                catch(\Exception $e){
+                    $errors .= $e->getMessage().' ';
+                }
+            }
+            if($errors != '')
+                return redirect('/admin/all-permissions')->withErrors($errors);
+
+            return redirect('/admin/all-permissions')->with('message', 'Permission(s) have been added successfully!');
 
         } catch(\Exception $e){
-            return back()->withErrors('This permission already exists!');
+            return back()->withErrors('Some permission(s) already exist!');
         }
     }
 
+    // View for assigning permission
     public function assignPermission() {
         $permissions = Permission::all();
         $roles = Role::all();
         return view('admin.pages.roles.assignPermission', compact('permissions', 'roles'));
     }
 
+    // Assign permission to a role
     public function assignPermissionToRole(Request $request) {
         if($request->permission == 'select-permission' || $request->role == 'select-role')
             return redirect('/admin/all-roles')->withErrors('Please select a Permission and a Role!');

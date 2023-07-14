@@ -25,7 +25,7 @@
                     <table class="table table-striped" id="table-1">
                       <thead>
                         <tr>
-                          <th class="text-center">
+                          <th>
                             #
                           </th>
                           <th>Name</th>
