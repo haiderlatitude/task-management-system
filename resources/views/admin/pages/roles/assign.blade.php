@@ -13,25 +13,26 @@
             </div>
         @endif
 
-        <div class="card py-3 px-5">
+        <div class="card py-3 px-5 col-lg-6">
             <form action="/admin/assign-role-to-user" method="POST">
                 @csrf
                 <p><b>Assign Roles to Users</b></p>
-                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="role" id="role">
-                    <option value="select-role" selected>-- Select Role --</option>
+                <select class="w-full rounded-lg my-3 text-dark px-3 py-2 outline-none outline-blue-200" name="roles[]" id="role" multiple>
                     @foreach ($roles as $role)
                         <option id="{{$role->id}}" value="{{$role->id}}">{{$role->name}}</option>
                     @endforeach
                 </select>
         
-                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="user" id="user">
+                <select type="text" class="w-full rounded-lg my-3 bg-white text-dark px-3 py-2 outline-none outline-blue-200" name="user" id="user">
                     <option value="select-user" selected>-- Select User --</option>
                     @foreach ($users as $user)
                         <option id="{{$user->id}}" value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
                 </select>
         
-                <button title="Assign" class="rounded-lg bg-blue-500 hover:bg-blue-600 text-white px-3 py-1">Assign</button>
+                <div>
+                    <button title="Assign" class="rounded-lg bg-blue-500 hover:bg-blue-600 text-white px-3 py-1">Assign</button>
+                </div>
             </form>
         </div>
     </div>

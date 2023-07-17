@@ -30,7 +30,6 @@
                           </th>
                           <th>Name</th>
                           <th>Permissions</th>
-                          <th>Assigned To</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -48,18 +47,6 @@
                                     @foreach ($role->permissions as $permission)
                                         {{$permission->name}}
                                         @if(!$permission == $loop->last)
-                                            ,
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </td>
-                            <td>
-                                @if ($role->users->first() == null)
-                                    None
-                                @else
-                                    @foreach ($role->users as $user)
-                                        {{$user->name}}
-                                        @if(!$user == $loop->last)
                                             ,
                                         @endif
                                     @endforeach

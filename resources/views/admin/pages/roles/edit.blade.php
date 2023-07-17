@@ -46,22 +46,6 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <label>Assigned To</label>
-                            <div class="text-danger"><sub>*Check the check-boxes below to remove the role from User</sub></div>
-                            @if($role->users->first() == null)
-                                <p class="ml-4"><b>No One</b></p>
-                            @else
-                                @foreach ($role->users as $user)
-                                    <div class="mx-3 my-2 text-dark">
-                                        <input type="checkbox" class="mx-2" name="users[]" id="{{$user->id}}" value="{{$user->id}}" @if ($role->name == 'admin' && $user->name == 'admin')
-                                            disabled
-                                        @endif>
-                                        <label for="{{$user->id}}">{{$user->name}}</label>
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
                     </div>
                     <div class="mx-4 my-4">
                         <button class="bg-blue-500 hover:bg-blue-600 rounded text-white px-3 py-2">Save</button>

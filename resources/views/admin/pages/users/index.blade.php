@@ -46,6 +46,7 @@
                               <th>Phone Number</th>
                               <th>CNIC</th>
                               <th>Tasks</th>
+                              <th>Roles</th>
                               <th>Deleted At</th>
                               <th>Action</th>
                             </tr>
@@ -82,6 +83,18 @@
                                             @endif
                                         @endforeach
                                     @endif
+                                </td>
+                                <td>
+                                  @if($user->roles->first() == null)
+                                    None
+                                  @else
+                                    @foreach ($user->roles as $role)
+                                      {{ $role->name }}
+                                    @if (!$role == $loop->last)
+                                      ,
+                                    @endif
+                                    @endforeach
+                                  @endif
                                 </td>
                                 <td>
                                   @if($user->deleted_at == null)

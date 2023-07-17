@@ -33,6 +33,13 @@
                         </tr>
                       </thead>
                       <tbody>
+                        @if ($permissions->first() == null)
+                          <tr>
+                            <td colspan="3" class="text-center">
+                              Nothing to show at the moment!
+                            </td>
+                          </tr>
+                        @else
                         @foreach ($permissions as $permission)
                         <tr>
                             <td>
@@ -53,6 +60,7 @@
                             </td>
                           </tr>
                         @endforeach
+                        @endif
                       </tbody>
                     </table>
                   </div>

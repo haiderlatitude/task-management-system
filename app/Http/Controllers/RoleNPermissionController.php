@@ -64,12 +64,6 @@ class RoleNPermissionController extends Controller
             return redirect('/admin/all-roles')->withErrors('Role name cannot be empty!');
 
         $role->syncPermissions($request->permissions);
-        if(!$request->users == null){
-            foreach($request->users as $userId){
-                $user = User::find($userId);
-                $user->removeRole($role);
-            }
-        }
         $role->save();
 
         return redirect('/admin/all-roles')->with('message', 'Role details have been updated successfully!');
@@ -85,12 +79,14 @@ class RoleNPermissionController extends Controller
     // Assign role to a user
     public function assignRoleToUser(Request $request) {
         try{
-            if($request->role == 'select-role' || $request->user == 'select-user')
-                return redirect('/admin/all-roles')->withErrors('Please select both a Role and a User!');
-            $role = Role::find($request->role);
+            if($request->roles == '' || $request->user == 'select-user')
+                return back()->withErrors('Please select at least one Role and a User!');
             $user = User::find($request->user);
-            $user->assignRole($role);
-            return redirect('/admin/all-roles')->with('message', 'Role has been assigned successfully!');
+            foreach($request->roles as $roleId){
+                $role = Role::findById($roleId);
+                $user->assignRole($role);
+            }
+            return redirect('/admin/all-roles')->with('message', 'Role(s) have been assigned successfully!');
         } catch(\Exception $e){
             return redirect('/admin/assign-role')->withErrors('Something went wrong!');
         }
@@ -143,12 +139,14 @@ class RoleNPermissionController extends Controller
 
     // Assign permission to a role
     public function assignPermissionToRole(Request $request) {
-        if($request->permission == 'select-permission' || $request->role == 'select-role')
-            return redirect('/admin/all-roles')->withErrors('Please select a Permission and a Role!');
+        if($request->permissions == '' || $request->role == 'select-role')
+            return back()->withErrors('Please select at least one permission and a Role!');
         $role = Role::findById($request->role);
-        $permission = Permission::findById($request->permission);
-        $role->givePermissionTo($permission);
+        foreach($request->permissions as $permissionId){
+            $permission = Permission::findById($permissionId);
+            $role->givePermissionTo($permission);
+        }
 
-        return redirect('/admin/all-roles')->with('message', '"'.ucfirst($role->name).'" role has been given the permission to "'.$permission->name.'"');
+        return redirect('/admin/all-roles')->with('message', '"'.ucfirst($role->name).'" role has been given all selected permissions.');
     }
 }

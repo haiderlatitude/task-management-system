@@ -13,18 +13,17 @@
             </div>
         @endif
 
-        <div class="card py-3 px-5">
+        <div class="card py-3 px-5 col-lg-6">
             <form action="/admin/assign-permission-to-role" method="POST">
                 @csrf
                 <p><b>Assign Permissions to Roles</b></p>
-                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="permission" id="permission">
-                    <option value="select-permission" selected>-- Select Permission --</option>
+                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2 outline-none outline-blue-200" name="permissions[]" id="permissions" multiple>
                     @foreach ($permissions as $permission)
                         <option id="{{$permission->id}}" value="{{$permission->id}}">{{$permission->name}}</option>
                     @endforeach
                 </select>
         
-                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="role" id="role">
+                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2 outline-none outline-blue-200" name="role" id="role">
                     <option value="select-role" selected>-- Select Role --</option>
                     @foreach ($roles as $role)
                         <option id="{{$role->id}}" value="{{$role->id}}">{{$role->name}}</option>

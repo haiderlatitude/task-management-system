@@ -12,8 +12,10 @@ class UserObserver
      */
     public function creating(User $user): void
     {
-        $role = Role::findByName('user');
-        $user->assignRole($role);  
+        if(!$user->name == 'admin'){
+            $role = Role::findByName('user');
+            $user->assignRole($role);
+        }
     }
 
     /**

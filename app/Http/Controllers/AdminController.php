@@ -33,7 +33,8 @@ class AdminController extends Controller
 
     // View for adding user
     public function addUser() {
-        return view('admin.pages.users.add');
+        $roles = Role::all();
+        return view('admin.pages.users.add', compact('roles'));
     }
 
     // Storing the new user data
@@ -48,7 +49,7 @@ class AdminController extends Controller
         ]);
 
         try{
-            User::create([
+            $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $request->password,
@@ -57,6 +58,9 @@ class AdminController extends Controller
                 'phone' => $request->phone,
                 'cnic' => $request->cnic,
             ]);
+
+            if(!$request->roleId == 'role')
+                $user->assignRole(Role::findById($request->roleId));
     
             return back()->with('message', 'User has been registered successfully!');
         }
@@ -79,6 +83,12 @@ class AdminController extends Controller
         $user->dob = $request->dob;
         $user->phone = $request->phone;
         $user->cnic = $request->cnic;
+        if(!$request->roles == null){
+            foreach($request->roles as $roleId){
+                $role = Role::find($roleId);
+                $user->removeRole($role);
+            }
+        }
         $user->save();
 
         return redirect('/admin/all-users')->with('message', 'User details have been updated successfully!');
