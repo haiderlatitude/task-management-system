@@ -8,6 +8,24 @@
                 </a></li>
         </ul>
     </div>
+    <div>
+        <i class="fa fa-bell mr-3 has-dropdown"></i>
+    </div>
+    <div class="dropdown-menu dropdown-menu-right bg-white w-80 show">
+        <div class="dropdown-header inline">Notifications</div>
+        <div class="float-right mx-3 text-dark">
+            <a href="#">Mark All As Read</a>
+        </div>
+        <hr class="text-dark">
+        <div>
+            <a href="#" class="dropdown-item dropdown-item-unread text-dark mx-2 my-2">
+                <span class="dropdown-item-desc">Hello</span>
+            </a>
+            <a href="#" class="dropdown-item text-dark mx-2 my-2">
+                <span class="dropdown-item-desc">Hello</span>
+            </a>
+        </div>
+    </div>
     <ul class="navbar-nav navbar-right">
         <li class="dropdown">
             <a data-toggle="dropdown" class="nav-link cursor-pointer dropdown-toggle text-dark nav-link-lg nav-link-user">
