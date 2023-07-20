@@ -1,14 +1,20 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
-
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
+    <form method="POST" action="/store-reset-password">
+        @csrf @method('put')
+        <p class="font-medium mb-3">
+            {{__('You can update your password.')}}
+        </p>
+        <div class="text-danger mx-4">
+            @if ($errors->count() > 0)
+              @foreach ($errors->all() as $error)
+                <li><b>{{$error}}</b></li>
+              @endforeach
+            @endif
+        </div>
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{$user->email}}" required autofocus />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -31,9 +37,9 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
+            <button class="rounded bg-blue-500 hover:bg-blue-600 px-3 py-2 text-white">
                 {{ __('Reset Password') }}
-            </x-primary-button>
+            </button>
         </div>
     </form>
 </x-guest-layout>

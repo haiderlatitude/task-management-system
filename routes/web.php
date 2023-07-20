@@ -30,6 +30,13 @@ Route::get('/registerForm', function () {
     return view('admin.auth.register');
 });
 
+Route::get('/reset-password', function(){
+    return view('auth.forgot-password');
+});
+
+Route::post('/validate-email', [ProfileController::class, 'validateEmail']);
+Route::put('/store-reset-password', [ProfileController::class, 'storeNewPassword']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

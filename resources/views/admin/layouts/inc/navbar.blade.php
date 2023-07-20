@@ -30,18 +30,22 @@
         @foreach (auth()->user()->notifications as $notification)
             @if($notification->read_at == NULL)
                 <div>
-                    <form action="/read-notification" method="POST" class="dropdown-item text-dark mx-2 my-2">
+                    <form action="/read-notification" method="POST" class="dropdown-item text-dark">
                         @csrf
                         <input type="hidden" name="notificationId" id="notificationId" value="{{$notification->id}}">
                         <input type="hidden" name="userId" id="userId" value="{{auth()->user()->id}}">
-                        <button class="dropdown-item-desc bi bi-dot text-sm">{{$notification->data['data']}}</button>
+                        <button class="dropdown-item-desc text-sm">{{$notification->data['data']}}</button>
+                        <span class="bi bi-dot float-left"></span>
                     </form>
                 </div>
             @else
                 <div>
-                    <a href="/users/{{auth()->user()->name}}/my-tasks" class="dropdown-item text-dark mx-2 my-2">
-                        <span class="dropdown-item-desc">{{$notification->data['data']}}</span>
-                    </a>
+                    <form action="/read-notification" method="POST" class="dropdown-item text-dark">
+                        @csrf
+                        <input type="hidden" name="notificationId" id="notificationId" value="{{$notification->id}}">
+                        <input type="hidden" name="userId" id="userId" value="{{auth()->user()->id}}">
+                        <button class="dropdown-item-desc text-sm">{{$notification->data['data']}}</button>
+                    </form>
                 </div>
             @endif
         @endforeach

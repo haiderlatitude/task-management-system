@@ -50,6 +50,11 @@
                     @endforeach
                   @endif
                 </div>
+                <div class="text-success mx-4">
+                  @if (session()->has('message'))
+                    {{session('message')}}
+                  @endif
+                </div>
               <div class="card-body">
                 <form method="POST" action="{{route('login')}}" class="needs-validation">
                     @csrf
@@ -64,7 +69,7 @@
                     <div class="d-block">
                       <label for="password" class="control-label">Password</label>
                       <div class="float-right">
-                        <a href="#" class="text-small">
+                        <a href="/reset-password" class="text-small">
                           Forgot Password?
                         </a>
                       </div>

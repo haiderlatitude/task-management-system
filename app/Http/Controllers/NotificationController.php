@@ -9,7 +9,11 @@ class NotificationController extends Controller
 {
     public function readNotification(Request $request) {
         $user = User::find($request->userId);
-        $user->unreadNotifications->find($request->notificationId)->markAsRead();
+        $notification = $user->notifications->find($request->notificationId);
+
+        if($notification->read_at == null)
+            $notification->markAsRead();
+
         if($user->hasRole('admin')){
             return redirect('/admin/all-tasks');
         }

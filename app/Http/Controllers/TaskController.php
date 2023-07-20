@@ -50,6 +50,8 @@ class TaskController extends Controller
             $task = Task::find($req->taskid);
             $task->status_id = $req->statusid;
             $task->save();
+
+            // If task status_id is 3 (i.e complete)
             if($task->status_id == 3){
                 User::find(1)->notify(new TaskComplete($req->user()->name, $task->name));
             }
@@ -70,12 +72,12 @@ class TaskController extends Controller
         if(Carbon::parse($req->date)->lessThan(now()))
             return back()->withErrors('Due Date cannot be from the past!');
 
-        $task = new Task();
-        $task->name = $req->name;
-        $task->description = $req->description;
-        $task->due_date = $req->date;
-        $task->creator_id = request()->user()->id;
-        $task->save();
+        Task::create([
+            'name' => $req->name,
+            'description' => $req->description,
+            'due_date' => $req->date,
+            'creator_id' => request()->user()->id,
+        ]);
 
         return redirect('/admin/add-task')->with('message', 'Task has been saved successfully!');
     }
