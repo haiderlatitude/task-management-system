@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\TaskAssigned;
+use App\Notifications\TaskComplete;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -35,6 +37,7 @@ class TaskController extends Controller
             $task = Task::find($req->task);
             $user = User::find($req->user);
             $task->users()->attach($user);
+            $user->notify(new TaskAssigned($task->name));
             return redirect('/admin/all-tasks')->with('message', 'Task has been assigned successfully!');
         } catch(\Exception $e){
             return redirect('/admin/assign-task')->withErrors('Something went wrong!');
@@ -47,7 +50,9 @@ class TaskController extends Controller
             $task = Task::find($req->taskid);
             $task->status_id = $req->statusid;
             $task->save();
-
+            if($task->status_id == 3){
+                User::find(1)->notify(new TaskComplete($req->user()->name, $task->name));
+            }
             return back()->with('message', 'Task Status has been updated successfully!');
 
         }

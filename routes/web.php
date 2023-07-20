@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleNPermissionController;
 use App\Http\Controllers\TaskController;
@@ -43,7 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/assign-task', [TaskController::class, 'assignTask']);
         Route::post('/update-task-status', [TaskController::class, 'updateTaskStatus']);
 
-        // Users
+        // Admin manages Users
         Route::get('/all-users', [AdminController::class, 'index']);
         Route::get('/add-user', [AdminController::class, 'addUser']);
         Route::post('/store-user', [AdminController::class, 'storeUser']);
@@ -68,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/assign-permission-to-role', [RoleNPermissionController::class, 'assignPermissionToRole']);
     });
 
+    // User Routes
     Route::prefix('users')->group(function () {
         Route::get('/{username}/my-tasks', [UserController::class, 'userTasks']);
         Route::post('/{username}/update-details', [TaskController::class, 'updateTaskStatus']);
@@ -75,11 +77,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/{username}/my-permissions', [UserController::class, 'userPermissions']);
     });
 
+    // Profile Routes
     Route::get('/edit-profile', [ProfileController::class, 'edit']);
     Route::patch('/update-profile', [ProfileController::class, 'update']);
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Notification Routes
+    Route::post('/read-notification', [NotificationController::class, 'readNotification']);
+    Route::post('/read-all-notifications', [NotificationController::class, 'readAllNotifications']);
 });
 
 Route::fallback(function(){
