@@ -40,7 +40,7 @@ class TaskController extends Controller
             $user->notify(new TaskAssigned($task->name));
             return redirect('/admin/all-tasks')->with('message', 'Task has been assigned successfully!');
         } catch(\Exception $e){
-            return redirect('/admin/assign-task')->withErrors('Something went wrong!');
+            return back()->withErrors('Something went wrong!');
         }
     }
 

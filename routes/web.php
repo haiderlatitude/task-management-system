@@ -94,6 +94,7 @@ Route::middleware('auth')->group(function () {
     // Notification Routes
     Route::post('/read-notification', [NotificationController::class, 'readNotification']);
     Route::post('/read-all-notifications', [NotificationController::class, 'readAllNotifications']);
+    Route::delete('/delete-notification', [NotificationController::class, 'deleteNotification']);
 });
 
 Route::fallback(function(){

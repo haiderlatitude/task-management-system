@@ -11,6 +11,7 @@
               @endforeach
             @endif
         </div>
+        
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />

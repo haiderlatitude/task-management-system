@@ -7,17 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TaskAssigned extends Notification
+class RoleAssigned extends Notification
 {
     use Queueable;
-
-    protected $task;
+    
     /**
      * Create a new notification instance.
      */
-    public function __construct($task)
+    public function __construct()
     {
-        $this->task = $task;
+        //
     }
 
     /**
@@ -36,11 +35,9 @@ class TaskAssigned extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('New Task Assigned')
-                    ->greeting('Dear User,')
-                    ->line('You have been assigned a new task.')
-                    ->action('View Task Details', url('https://localhost:8000/loginForm'))
-                    ->line('Thank you!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -51,8 +48,8 @@ class TaskAssigned extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'data' => 'Admin has assigned you a new task: '.$this->task.'.',
-            'link' => '/my-tasks',
+            'data' => 'Congratulations! You have been assigned some new role(s).',
+            'link' => '/my-roles',
         ];
     }
 }

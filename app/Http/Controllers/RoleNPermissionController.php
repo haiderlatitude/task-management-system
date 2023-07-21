@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\RoleAssigned;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -86,6 +87,7 @@ class RoleNPermissionController extends Controller
                 $role = Role::findById($roleId);
                 $user->assignRole($role);
             }
+            $user->notify(new RoleAssigned());
             return redirect('/admin/all-roles')->with('message', 'Role(s) have been assigned successfully!');
         } catch(\Exception $e){
             return redirect('/admin/assign-role')->withErrors('Something went wrong!');
