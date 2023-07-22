@@ -6,7 +6,6 @@ use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
 class DashboardController extends Controller
 {
     public function index()

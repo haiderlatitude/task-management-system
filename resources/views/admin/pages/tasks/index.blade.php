@@ -32,7 +32,7 @@
                               <th>Description</th>
                               <th>Status</th>
                               <th>Due Date</th>
-                              <th>Created By</th>
+                              <th>Completed At</th>
                               <th>Assigned To</th>
                               <th>Actions</th>
                             </tr>
@@ -65,10 +65,10 @@
                                   {{date('d m Y', strtotime($task->due_date))}}
                                 </td>
                                 <td>
-                                    @if ($task->creator == null)
-                                    None
+                                    @if ($task->completed_at == null)
+                                      Pending
                                     @else
-                                        {{ $task->creator->name }}
+                                      {{ date('d m Y | g:i A', strtotime($task->completed_at)) }}
                                     @endif
                                 </td>
                                 <td>

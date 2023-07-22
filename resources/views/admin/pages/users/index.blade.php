@@ -47,7 +47,7 @@
                               <th>CNIC</th>
                               <th>Tasks</th>
                               <th>Roles</th>
-                              <th>Deleted At</th>
+                              <th>Active/Deleted</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -64,7 +64,7 @@
                                   {{$user->email}}
                                 </td>
                                 <td>
-                                  {{$user->dob}}
+                                  {{date('d m Y', strtotime($user->dob))}}
                                 </td>
                                 <td>
                                   {{$user->phone}}
@@ -100,7 +100,7 @@
                                   @if($user->deleted_at == null)
                                     Active
                                   @else
-                                    {{date('d-m-Y | g:i:sa', strtotime($user->deleted_at))}}
+                                    {{date('d-m-Y | g:i:s A', strtotime($user->deleted_at))}}
                                   @endif
                                 </td>
                                 <td>
@@ -115,7 +115,7 @@
                                         hidden
                                       @endif class="btn btn-danger">@csrf
                                         <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
-                                          <button><i class="bi bi-trash text-white"></i></button>
+                                          <button class="bi bi-trash text-white"></button>
                                       </form>
                                     @else
                                       <form action="/admin/restore-user" method="POST" class="btn btn-primary">@csrf

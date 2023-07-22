@@ -49,12 +49,14 @@ class TaskController extends Controller
         try{
             $task = Task::find($req->taskid);
             $task->status_id = $req->statusid;
-            $task->save();
 
             // If task status_id is 3 (i.e complete)
             if($task->status_id == 3){
+                $task->completed_at = now();
                 User::find(1)->notify(new TaskComplete($req->user()->name, $task->name));
             }
+            $task->save();
+
             return back()->with('message', 'Task Status has been updated successfully!');
 
         }

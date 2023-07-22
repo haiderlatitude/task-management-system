@@ -16,10 +16,10 @@ class NotificationController extends Controller
             $notification->markAsRead();
 
         if($user->hasRole('admin')){
-            return redirect('/admin/all-tasks');
+            return redirect('/admin'.$notification->data['adminLink']);
         }
         else{
-            return redirect('/users/'.$user->name.$notification->data['link']);
+            return redirect('/users/'.$user->name.$notification->data['userLink']);
         }
     }
 

@@ -49,7 +49,8 @@ class RoleAssigned extends Notification
     {
         return [
             'data' => 'Congratulations! You have been assigned some new role(s).',
-            'link' => '/my-roles',
+            'userLink' => '/my-roles',
+            'adminLink' => '/all-roles',
         ];
     }
 }

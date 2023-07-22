@@ -52,7 +52,8 @@ class TaskAssigned extends Notification
     {
         return [
             'data' => 'Admin has assigned you a new task: '.$this->task.'.',
-            'link' => '/my-tasks',
+            'userLink' => '/my-tasks',
+            'adminLink' => '/all-tasks',
         ];
     }
 }

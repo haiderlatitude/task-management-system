@@ -50,7 +50,9 @@ class TaskComplete extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'data' => 'User "'.$this->username.'" has completed the task "'.$this->task.'"'
+            'data' => 'User "'.$this->username.'" has completed the task "'.$this->task.'"',
+            'adminLink' => '/all-tasks',
+            'userLink' => '/my-tasks',
         ];
     }
 }

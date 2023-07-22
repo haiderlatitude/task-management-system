@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('creator_id')->nullable();
             $table->foreign('creator_id')->references('id')->on('users')->cascadeOnDelete();
             $table->dateTime('due_date');
+            $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
     }

@@ -91,6 +91,9 @@ class AdminController extends Controller
         }
         $user->save();
 
+        if(!$user->hasRole('admin'))
+            return redirect('/dashboard');
+
         return redirect('/admin/all-users')->with('message', 'User details have been updated successfully!');
     }
 

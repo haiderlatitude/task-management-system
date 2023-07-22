@@ -21,103 +21,13 @@
                     <div class="card-header">
                         <h4 class="mt-2"><b>Enter Details</b></h4>
                     </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-person"></i>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-envelope"></i>
-                                    </div>
-                                </div>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Password</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="fa fa-key" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" name="password" id="password" placeholder="Password">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Date of Birth</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-calendar"></i>
-                                    </div>
-                                </div>
-                                <input type="date" class="form-control" name="dob" id="dob" placeholder="DOB of employee">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-phone"></i>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number of Employee">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>CNIC Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="fa fa-id-card"></i>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" name="cnic" id="cnic" placeholder="CNIC Number of Employee">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Role</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-shield"></i>
-                                    </div>
-                                </div>
-                                <select class="text-dark" name="roleId" id="roleId">
-                                    <option value="role" selected>-- Role --</option>
-                                    @foreach ($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}</option>
-                                    @endforeach
-                                </select>
-                                <p class="mx-3 text-xs">*Default Role: User</p>
-                            </div>
-                        </div>
-                    </div>
+                    <x-name-input-field />
+                    <x-email-input-field />
+                    <x-password-input-field />
+                    <x-dob-input-field />
+                    <x-phone-input-field />
+                    <x-cnic-input-field />
+                    <x-role-input-field :roles="$roles" />
                     <div class="mx-4 my-4">
                         <button class="bg-blue-500 hover:bg-blue-600 rounded text-white px-3 py-2">Add</button>
                     </div>
