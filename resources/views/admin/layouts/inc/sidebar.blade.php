@@ -43,8 +43,7 @@
                     <li><a class="nav-link" href="/admin/add-role">Add Role</a></li>
                     <li><a class="nav-link" href="/admin/assign-role">Assign Role(s)</a></li>
                     <li><a class="nav-link" href="/admin/all-permissions">All Permissions</a></li>
-                    <li><a class="nav-link" href="/admin/add-permission">Add Permission</a></li>
-                    <li><a class="nav-link" href="/admin/assign-permission">Assign Permission(s) to a Role</a></li>
+                    <li><a class="nav-link" href="/admin/assign-permission">Give Permission(s) to a Role</a></li>
                 </ul>
             </li>
         </ul>

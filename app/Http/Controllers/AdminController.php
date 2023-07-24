@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -59,6 +60,7 @@ class AdminController extends Controller
                 'cnic' => $request->cnic,
             ]);
 
+            $user->notify(new WelcomeNotification());
             if(!$request->roleId == 'role')
                 $user->assignRole(Role::findById($request->roleId));
     

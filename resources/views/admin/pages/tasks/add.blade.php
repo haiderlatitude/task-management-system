@@ -25,10 +25,10 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                        <i class="bi bi-list-ul"></i>
+                                        <x-icon :icon="'bi bi-list-ul'" />
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                                <x-text-input type="text" class="form-control" name="name" id="name" placeholder="Name" />
                             </div>
                         </div>
                     </div>
@@ -38,10 +38,10 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                        <i class="bi bi-text-paragraph"></i>
+                                        <x-icon :icon="'bi bi-text-paragraph'" />
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" name="description" id="description" placeholder="Description">
+                                <x-text-input type="text" class="form-control" name="description" id="description" placeholder="Description" />
                             </div>
                         </div>
                     </div>
@@ -51,15 +51,15 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                        <i class="bi bi-calendar"></i>
+                                        <x-icon :icon="'bi bi-calendar'" />
                                     </div>
                                 </div>
-                                <input type="date" class="form-control" name="date" id="date" placeholder="Date">
+                                <x-text-input type="date" class="form-control" name="date" id="date" placeholder="Date" />
                             </div>
                         </div>
                     </div>
                     <div class="mx-4 my-4">
-                        <button class="bg-blue-500 hover:bg-blue-600 rounded text-white px-3 py-2">Add</button>
+                        <x-primary-button class="bg-blue-500 hover:bg-blue-600 rounded text-white px-3 py-2">Add</x-primary-button>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Notifications\RoleAssigned;
+use App\Notifications\WelcomeNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -16,8 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
-        $this->call(StatusSeeder::class);
+        $userRole = Role::create(['name' => 'manager']);
         $admin = \App\Models\User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
@@ -40,5 +41,10 @@ class DatabaseSeeder extends Seeder
 
         $admin->assignRole($adminRole);
         $user->assignRole($userRole);
+        $admin->notify(new WelcomeNotification());
+        $user->notify(new WelcomeNotification());
+        $user->notify(new RoleAssigned());
+        $this->call(StatusSeeder::class);
+        $this->call(PermissionSeeder::class);
     }
 }

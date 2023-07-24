@@ -70,8 +70,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/assign-role', [RoleNPermissionController::class, 'assignRole']);
         Route::post('/assign-role-to-user', [RoleNPermissionController::class, 'assignRoleToUser']);
         Route::get('/all-permissions', [RoleNPermissionController::class, 'allPermissions']);
-        Route::get('/add-permission', [RoleNPermissionController::class, 'addPermission']);
-        Route::post('/store-permission', [RoleNPermissionController::class, 'storePermission']);
         Route::get('/assign-permission', [RoleNPermissionController::class, 'assignPermission']);
         Route::post('/assign-permission-to-role', [RoleNPermissionController::class, 'assignPermissionToRole']);
     });

@@ -100,38 +100,6 @@ class RoleNPermissionController extends Controller
         return view('admin.pages.roles.permissions', compact('permissions'));
     }
 
-    // View for adding a permission
-    public function addPermission() {
-        return view('admin.pages.roles.addPermission');
-    }
-
-    // Store a single or multiple permissions' details
-    public function storePermission(Request $request) {
-        try{
-            $errors = '';
-            if($request->name == '')
-                return back()->withErrors('Permission name cannot be empty!');
-            
-            $permissionNames = explode(',', $request->name);
-            foreach($permissionNames as $permissionName){
-                try{
-                    if($permissionName != '')
-                        Permission::create(['name' => Str::slug($permissionName)]);
-                }
-                catch(\Exception $e){
-                    $errors .= $e->getMessage().' ';
-                }
-            }
-            if($errors != '')
-                return redirect('/admin/all-permissions')->withErrors($errors);
-
-            return redirect('/admin/all-permissions')->with('message', 'Permission(s) have been added successfully!');
-
-        } catch(\Exception $e){
-            return back()->withErrors('Some permission(s) already exist!');
-        }
-    }
-
     // View for assigning permission
     public function assignPermission() {
         $permissions = Permission::all();

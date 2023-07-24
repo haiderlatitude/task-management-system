@@ -15,6 +15,9 @@ class NotificationController extends Controller
         if($notification->read_at == null)
             $notification->markAsRead();
 
+        if($notification->data['data'] == 'Welcome to Task Management System!')
+            return redirect('/dashboard');
+
         if($user->hasRole('admin')){
             return redirect('/admin'.$notification->data['adminLink']);
         }
