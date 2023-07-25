@@ -42,9 +42,7 @@
                         @else
                         @foreach ($permissions as $permission)
                         <tr>
-                            <td>
-                              {{ $permission->id }}
-                            </td>
+                            <td></td>
                             <td>{{ $permission->name }}</td>
                             <td>
                                 @if ($permission->roles->first() == null)
@@ -72,3 +70,6 @@
     </section>
     </div>
 @endsection
+@push('styles')
+  <link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
+@endpush

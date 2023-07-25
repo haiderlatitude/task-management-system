@@ -31,10 +31,12 @@ class TaskController extends Controller
         return view('admin.pages.tasks.add');
     }
 
-    // Assign Task
+    // Assign Task 
     public function assignTask(Request $req) {
         try{
-            $task = Task::find($req->task);
+            if($req->user == 'select-user' || $req->task == 'select-task')
+                return back()->withErrors('Please select a task and a role!');
+            $task = Task::find($req->task); 
             $user = User::find($req->user);
             $task->users()->attach($user);
             $user->notify(new TaskAssigned($task->name));
@@ -77,7 +79,7 @@ class TaskController extends Controller
         Task::create([
             'name' => $req->name,
             'description' => $req->description,
-            'due_date' => $req->date,
+            'due_date' => Carbon::parse($req->date)->endOfDay(),
             'creator_id' => request()->user()->id,
         ]);
 

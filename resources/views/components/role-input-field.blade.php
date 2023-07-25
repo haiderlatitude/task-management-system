@@ -8,7 +8,7 @@
                 </div>
             </div>
             <select class="text-dark" name="roleId" id="roleId">
-                <option value="role" selected>-- Role --</option>
+                <option value="" selected>-- Role --</option>
                 @foreach ($roles as $role)
                     <option value="{{$role->id}}">{{$role->name}}</option>
                 @endforeach

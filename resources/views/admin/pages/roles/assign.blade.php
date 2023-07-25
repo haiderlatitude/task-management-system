@@ -4,12 +4,12 @@
     <div class="main-content">
         @if(session()->has('message'))
             <div class="card py-3 px-5 text-success">
-                {{session('message')}}
+                <b>{{session('message')}}</b>
             </div>
         @endif
         @if ($errors->count() > 0)
             <div class="card py-3 px-5 text-danger">
-                {{$errors->first()}}
+                <b>{{$errors->first()}}</b>
             </div>
         @endif
 

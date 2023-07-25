@@ -39,4 +39,9 @@ class NotificationController extends Controller
         Notification::find($request->notificationId)->delete();
         return back()->with('message', 'Notification Deleted!');
     }
+
+    public function deleteAllNotifications(Request $request) {
+        User::find($request->userId)->notifications->each->delete();
+        return back()->with('message', 'All Notifications Deleted!');
+    }
 }

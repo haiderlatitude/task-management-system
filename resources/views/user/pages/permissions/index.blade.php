@@ -33,21 +33,20 @@
                       </thead>
                       <tbody>
                         @if($permissions->first() == null)
-                            <tr>
-                                <td class="text-center" colspan="2">
-                                    <b>Nothing to show at the moment!</b>
-                                </td>
-                            </tr>
+                          <tr>
+                            <td></td>
+                            <td>
+                              <b>No Permissions!</b>
+                            </td>
+                          </tr>
                         @else
-                        @foreach ($permissions as $permission)
+                          @foreach ($permissions as $permission)
                             <tr>
-                                <td>
-                                    {{ $permission->id }}
-                                </td>
+                                <td></td>
                                 <td>{{ $permission->name }}</td>
                             </tr>
-                            @endforeach
-                        @endempty
+                          @endforeach
+                        @endif
                       </tbody>
                     </table>
                   </div>
@@ -59,3 +58,6 @@
     </section>
     </div>
 @endsection
+@push('styles')
+  <link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
+@endpush

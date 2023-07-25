@@ -1,12 +1,21 @@
 <div id="notification-div" class="hidden dropdown-menu dropdown-menu-right bg-white w-3/6">
     <div class="flex justify-between flex-wrap">
         <div class="dropdown-header inline">Notifications</div>
-        <div class="float-right dropdown-header text-dark">
-            <form action="/read-all-notifications" method="POST">
-                @csrf
-                <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
-                <button class="text-sm hover:text-blue-500 hover:underline">Mark All As Read</button>
-            </form>
+        <div>
+            <div class="float-right dropdown-header text-dark">
+                <form action="/read-all-notifications" method="POST">
+                    @csrf
+                    <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
+                    <button class="text-sm hover:text-blue-500 hover:underline">Mark All As Read</button>
+                </form>
+            </div>
+            <div class="float-right dropdown-header text-dark">
+                <form action="/delete-all-notifications" method="POST">
+                    @csrf
+                    <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
+                    <button class="text-sm hover:text-blue-500 hover:underline">Delete All</button>
+                </form>
+            </div>
         </div>
     </div>
     <hr class="text-dark">

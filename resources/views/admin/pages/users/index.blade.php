@@ -37,7 +37,7 @@
                         <table class="table table-striped" id="table-1">
                           <thead>
                             <tr>
-                              <th class="text-center">
+                              <th>
                                 #
                               </th>
                               <th>Name</th>
@@ -54,9 +54,7 @@
                           <tbody>
                             @foreach ($users as $user)
                             <tr>
-                                <td>
-                                  {{$user->id}}
-                                </td>
+                                <td></td>
                                 <td>
                                   {{$user->name}}
                                 </td>
@@ -104,23 +102,23 @@
                                   @endif
                                 </td>
                                 <td>
-                                    <form action="/admin/edit-user" class="btn btn-primary @if ($user->hasRole('admin'))
-                                      col-10
-                                    @endif" method="POST">@csrf
+                                    <form action="/admin/edit-user" class="inline" method="POST">@csrf
                                       <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
-                                        <button class="bi bi-pencil text-white"></button>
+                                        <button class="bi bi-pencil btn btn-primary text-white @if ($user->hasRole('admin'))
+                                          col-10
+                                        @endif"></button>
                                     </form>
                                     @if ($user->deleted_at == null)
-                                      <form action="/admin/delete-user" method="POST" @if ($user->hasRole('admin'))
+                                      <form action="/admin/delete-user" method="POST" class="inline" @if ($user->hasRole('admin'))
                                         hidden
-                                      @endif class="btn btn-danger">@csrf
+                                      @endif>@csrf
                                         <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
-                                          <button class="bi bi-trash text-white"></button>
+                                          <button class="bi bi-trash text-white btn btn-danger"></button>
                                       </form>
                                     @else
-                                      <form action="/admin/restore-user" method="POST" class="btn btn-primary">@csrf
+                                      <form action="/admin/restore-user" method="POST" class="inline">@csrf
                                         <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
-                                          <button><i class="bi bi-bootstrap-reboot text-white"></i></button>
+                                          <button><i class="bi bi-bootstrap-reboot text-white btn btn-primary"></i></button>
                                       </form>
                                     @endif
                                 </td>
@@ -137,3 +135,6 @@
           </section>
     </div>
 @endsection
+@push('styles')
+<link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
+@endpush

@@ -25,14 +25,14 @@
                         <table class="table table-striped" id="table-1">
                           <thead>
                             <tr>
-                              <th class="text-center">
+                              <th>
                                 #
                               </th>
                               <th>Name</th>
                               <th>Description</th>
                               <th>Status</th>
                               <th>Due Date</th>
-                              <th>Completed At</th>
+                              <th>Complete Date</th>
                               <th>Assigned To</th>
                               <th>Actions</th>
                             </tr>
@@ -40,9 +40,7 @@
                           <tbody>
                             @foreach ($tasks as $task)
                             <tr>
-                                <td>
-                                  {{$task->id}}
-                                </td>
+                                <td></td>
                                 <td>{{ $task->name}}</td>
                                 <td>
                                   {{$task->description}}
@@ -58,18 +56,26 @@
                                             @endif>{{$status->name}}</option>
                                         @endforeach
                                       </select>
-                                      <button class="bg-blue-500 hover:bg-blue-600 text-sm btn-primary mx-2 px-2 py-1 rounded-sm"><i class="bi bi-upload"></i></button>
+                                      <button class="bg-blue-500 hover:bg-blue-600 text-sm btn-primary mx-2 px-2 py-1 rounded-sm focus:outline-none"><i class="bi bi-upload"></i></button>
                                     </form>
                                 </td>
                                 <td>
                                   {{date('d m Y', strtotime($task->due_date))}}
                                 </td>
                                 <td>
-                                    @if ($task->completed_at == null)
+                                  @if ($task->completed_at == null)
+                                    <div class="bg-danger inline rounded-xl text-white px-3 py-2">
                                       Pending
-                                    @else
-                                      {{ date('d m Y | g:i A', strtotime($task->completed_at)) }}
-                                    @endif
+                                    </div>
+                                  @elseif ($task->due_date >= $task->completed_at)
+                                    <div class="bg-success inline rounded-xl text-white px-3 py-2">
+                                      {{date('d m Y', strtotime($task->completed_at))}}
+                                    </div>
+                                  @else
+                                    <div class="bg-danger inline rounded-xl text-white px-3 py-2">
+                                      {{date('d m Y', strtotime($task->completed_at))}}
+                                    </div>
+                                  @endif
                                 </td>
                                 <td>
                                     @if ($task->users->first() == null)
@@ -84,9 +90,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <form action="/admin/edit-task" method="POST" class="btn btn-primary">@csrf
+                                    <form action="/admin/edit-task" method="POST">@csrf
                                       <input type="hidden" name="taskid" id="taskid" value="{{$task->id}}">
-                                        <button class="bi bi-pencil text-white"></button>
+                                      <button class="bi bi-pencil text-white btn btn-primary focus:outline-none focus:outline-blue-400"></button>
                                     </form>
                                 </td>
                               </tr>
@@ -102,3 +108,6 @@
         </section>
     </div>
 @endsection
+@push('styles')
+  <link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
+@endpush

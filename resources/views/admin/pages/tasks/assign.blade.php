@@ -4,12 +4,12 @@
     <div class="main-content">
         @if(session()->has('message'))
             <div class="card py-3 px-5 text-success">
-                {{session('message')}}
+                <b>{{session('message')}}</b>
             </div>
         @endif
         @if ($errors->count() > 0)
-            <div class="card py-3 px-5 text-danger">
-                {{$errors->first()}}
+            <div class="card py-3 px-5 text-red-600">
+                <b>{{$errors->first()}}</b>
             </div>
         @endif
 
@@ -17,19 +17,9 @@
             <form action="/admin/assign-task" method="POST">
                 @csrf
                 <p><b>Assign Tasks to Users</b></p>
-                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="task" id="task">
-                    <option value="select-task" selected>-- Select Task --</option>
-                    @foreach ($tasks as $task)
-                        <option id="{{$task->id}}" value="{{$task->id}}">{{$task->name}}</option>
-                    @endforeach
-                </select>
+                <x-input-select :collection="$tasks" :value="'select-task'" :name="'task'" :id="'task'" />
         
-                <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2" name="user" id="user">
-                    <option value="select-user" selected>-- Select User --</option>
-                    @foreach ($users as $user)
-                        <option id="{{$user->id}}" value="{{$user->id}}">{{$user->name}}</option>
-                    @endforeach
-                </select>
+                <x-input-select :collection="$users" :value="'select-user'" :name="'user'" :id="'user'" />
         
                 <button title="Assign" class="rounded-lg bg-blue-500 hover:bg-blue-600 text-white px-3 py-1">Assign</button>
             </form>

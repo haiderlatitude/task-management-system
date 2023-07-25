@@ -25,21 +25,21 @@
                     <table class="table table-striped" id="table-1">
                       <thead>
                         <tr>
-                          <th class="text-center">
+                          <th>
                             #
                           </th>
                           <th>Name</th>
                           <th>Description</th>
                           <th>Status</th>
+                          <th>Due Date</th>
+                          <th>Complete Date</th>
                           <th>Action(s)</th>
                         </tr>
                       </thead>
                       <tbody>
                         @foreach ($tasks as $task)
                         <tr>
-                            <td>
-                                {{ $task->id }}
-                            </td>
+                            <td></td>
                             <td>{{ $task->name }}</td>
                             <td>
                                 {{$task->description}}
@@ -53,6 +53,24 @@
                                             <option value="{{$status->id}}" @if($status->name == $task->status->name) selected @endif>{{$status->name}}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
+                                  {{date('d m Y', strtotime($task->due_date))}}
+                                </td>
+                                <td>
+                                  @if ($task->completed_at == null)
+                                    <div class="bg-danger inline rounded-xl text-white px-3 py-2">
+                                      Pending
+                                    </div>
+                                  @elseif ($task->due_date >= $task->completed_at)
+                                    <div class="bg-success inline rounded-xl text-white px-3 py-2">
+                                      {{date('d m Y', strtotime($task->completed_at))}}
+                                    </div>
+                                  @else
+                                    <div class="bg-danger inline rounded-xl text-white px-3 py-2">
+                                      {{date('d m Y', strtotime($task->completed_at))}}
+                                    </div>
+                                  @endif
                                 </td>
                                 <td>
                                     <button class="btn btn-primary">
@@ -73,3 +91,6 @@
     </section>
     </div>
 @endsection
+@push('styles')
+  <link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
+@endpush
