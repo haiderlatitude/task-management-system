@@ -13,7 +13,7 @@
             </div>
         @endif
         <form action="/admin/store-edited-user" method="POST">
-            @csrf
+            @csrf @method('put')
             <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
             <div>
                 <div class="card">

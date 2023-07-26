@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Task;
 use App\Notifications\RoleAssigned;
 use App\Notifications\WelcomeNotification;
 use Carbon\Carbon;
@@ -46,5 +47,7 @@ class DatabaseSeeder extends Seeder
         $user->notify(new RoleAssigned());
         $this->call(StatusSeeder::class);
         $this->call(PermissionSeeder::class);
+
+        // Task::factory(1000)->create();
     }
 }

@@ -3,13 +3,15 @@
 @section('main-content')
     <div class="main-content">
         @if(session()->has('message'))
-            <div class="card py-3 px-5 text-success">
+            <div class="alert alert-success">
                 <b>{{session('message')}}</b>
             </div>
         @endif
         @if($errors->count() > 0)
-            <div class="card py-3 px-5 text-danger">
-                <b>{{$errors->first()}}</b>
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    <ul><b>{{$error}}</b></ul>
+                @endforeach
             </div>
         @endif
         <form action="/admin/store-task" method="POST">
@@ -54,7 +56,7 @@
                                         <x-icon :icon="'bi bi-calendar'" />
                                     </div>
                                 </div>
-                                <x-text-input type="date" class="form-control" name="date" id="date" placeholder="Date" />
+                                <x-text-input type="date" class="form-control" name="due_date" id="due_date" placeholder="Date" />
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskStoreRequest;
+use App\Http\Requests\TaskUpdateRequest;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
@@ -68,18 +70,11 @@ class TaskController extends Controller
     }
 
     // Store task details
-    public function store(Request $req) {
-        if($req->name == '' || $req->description == '' || $req->date == ''){
-            return redirect('/admin/add-task')->withErrors('Please fill out all fields!');
-        }
-        
-        if(Carbon::parse($req->date)->lessThan(now()))
-            return back()->withErrors('Due Date cannot be from the past!');
-
+    public function store(TaskStoreRequest $req) {
         Task::create([
             'name' => $req->name,
             'description' => $req->description,
-            'due_date' => Carbon::parse($req->date)->endOfDay(),
+            'due_date' => Carbon::parse($req->due_date)->endOfDay(),
             'creator_id' => request()->user()->id,
         ]);
 
@@ -87,25 +82,28 @@ class TaskController extends Controller
     }
 
     // View for editing task
-    public function editTask(Request $request) {
-        $task = Task::find($request->taskid);
+    public function editTask($id) {
+        $task = Task::find($id);
         return view('admin.pages.tasks.edit', compact('task'));
     }
 
     // Store edited task details
-    public function storeEditedTask(Request $request) {
-        if($request->name == '' || $request->description == '')
-            return redirect('/admin/all-tasks')->withErrors('Name or Description fields cannot be empty!');
-            
-        $task = Task::find($request->taskid);
-        $task->name = $request->name;
-        $task->description = $request->description;
-        if(!is_null($request->users)){
-            foreach($request->users as $user){
-                $task->users()->detach($user);
+    public function storeEditedTask(TaskStoreRequest $request) {
+            $task = Task::find($request->taskid);
+            $request->validate([
+                'due_date' => 'after:'.date('d-m-Y', strtotime($task->created_at)),
+            ]);
+            $task->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'due_date' => $request->due_date,
+            ]);
+            if(!is_null($request->users)){
+                foreach($request->users as $user){
+                    $task->users()->detach($user);
+                }
             }
-        }
-        $task->save();
-        return redirect('/admin/all-tasks')->with('message', 'Task details have been updated successfully!');
+            $task->save();
+            return redirect('/admin/all-tasks')->with('message', 'Task details have been updated successfully!');
     }
 }

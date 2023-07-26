@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
 use App\Notifications\RoleAssigned;
 use App\Notifications\WelcomeNotification;
@@ -40,17 +41,7 @@ class AdminController extends Controller
     }
 
     // Storing the new user data
-    public function storeUser(Request $request) {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required|min:8',
-            'dob' => 'required',
-            'phone' => 'required|max:11',
-            'cnic' => 'required|max:15',
-            'roleId' => 'required',
-        ]);
-
+    public function storeUser(UserStoreRequest $request) {
         try{
             $user = User::create([
                 'name' => $request->name,
@@ -82,24 +73,35 @@ class AdminController extends Controller
 
     // Store the edited user details
     public function storeEditedUser(Request $request) {
-        $user = User::find($request->userid);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->dob = $request->dob;
-        $user->phone = $request->phone;
-        $user->cnic = $request->cnic;
-        if(!$request->roles == null){
-            foreach($request->roles as $roleId){
-                $role = Role::find($roleId);
-                $user->removeRole($role);
+        try{
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:users,email,'.$request->userid,
+                'dob' => 'required',
+                'phone' => 'required|max:11',
+                'cnic' => 'required|max:15',
+            ]);
+            $user = User::find($request->userid);
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'dob' => $request->dob,
+                'phone' => $request->phone,
+                'cnic' => $request->cnic,
+            ]);
+            
+            if(!$request->roles == null){
+                foreach($request->roles as $roleId){
+                    $role = Role::find($roleId);
+                    $user->removeRole($role);
+                }
             }
+            $user->save();
+
+            return redirect('/admin/all-users')->with('message', 'User details have been updated successfully!');
+        } catch(\Exception $e){
+            return redirect('/admin/all-users')->withErrors($e->getMessage());
         }
-        $user->save();
-
-        if(!$user->hasRole('admin'))
-            return redirect('/dashboard');
-
-        return redirect('/admin/all-users')->with('message', 'User details have been updated successfully!');
     }
 
     // Soft Delete User

@@ -3,13 +3,15 @@
 @section('main-content')
     <div class="main-content">
         @if(session()->has('message'))
-            <div class="card py-3 px-5 text-success">
+            <div class="alert alert-success">
                 <b>{{session('message')}}</b>
             </div>
         @endif
-        @if ($errors->count() > 0)
-          <div class="card py-3 px-5 text-danger">
-            <b>{{$errors->first()}}</b>
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+              <ul><b>{{$error}}</b></ul>
+            @endforeach
           </div>
         @endif
         <section class="section">
@@ -90,8 +92,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <form action="/admin/edit-task" method="POST">@csrf
-                                      <input type="hidden" name="taskid" id="taskid" value="{{$task->id}}">
+                                    <form action="/admin/edit-task/{{$task->id}}">
                                       <button class="bi bi-pencil text-white btn btn-primary focus:outline-none focus:outline-blue-400"></button>
                                     </form>
                                 </td>

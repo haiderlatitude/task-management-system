@@ -46,8 +46,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/add-task', [TaskController::class, 'formToAddTask']);
         Route::get('/task-form', [TaskController::class, 'formToAssignTask']);
         Route::post('/store-task', [TaskController::class, 'store']);
-        Route::post('/edit-task', [TaskController::class, 'editTask']);
-        Route::post('/store-edited-task', [TaskController::class, 'storeEditedTask']);
+        Route::get('/edit-task/{id}', [TaskController::class, 'editTask']);
+        Route::put('/store-edited-task', [TaskController::class, 'storeEditedTask']);
         Route::post('/assign-task', [TaskController::class, 'assignTask']);
         Route::post('/update-task-status', [TaskController::class, 'updateTaskStatus']);
 
@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/add-user', [AdminController::class, 'addUser']);
         Route::post('/store-user', [AdminController::class, 'storeUser']);
         Route::post('/edit-user', [AdminController::class, 'editUser']);
-        Route::post('/store-edited-user', [AdminController::class, 'storeEditedUser']);
+        Route::put('/store-edited-user', [AdminController::class, 'storeEditedUser']);
         Route::post('/delete-user', [AdminController::class, 'deleteUser']);
         Route::post('/restore-user', [AdminController::class, 'restoreUser']);
         Route::post('/deleted-or-active-users', [AdminController::class, 'deletedOrActiveUsers']);
@@ -94,10 +94,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/read-all-notifications', [NotificationController::class, 'readAllNotifications']);
     Route::post('/delete-all-notifications', [NotificationController::class, 'deleteAllNotifications']);
     Route::delete('/delete-notification', [NotificationController::class, 'deleteNotification']);
-});
-
-Route::fallback(function(){
-    return "Something went wrong!";
 });
 
 require __DIR__ . '/auth.php';

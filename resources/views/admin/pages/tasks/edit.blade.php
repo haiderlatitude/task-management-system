@@ -3,17 +3,19 @@
 @section('main-content')
     <div class="main-content">
         @if(session()->has('message'))
-            <div class="card py-3 px-5 text-success">
+            <div class="alert alert-success">
                 <b>{{session('message')}}</b>
             </div>
         @endif
-        @if($errors->count() > 0)
-            <div class="card py-3 px-5 text-danger">
-                <b>{{$errors->first()}}</b>
-            </div>
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+              <ul><b>{{$error}}</b></ul>
+            @endforeach
+          </div>
         @endif
         <form action="/admin/store-edited-task" method="POST">
-            @csrf
+            @csrf @method('put')
             <input type="hidden" name="taskid" id="taskid" value="{{$task->id}}">
             <div>
                 <div class="card">
@@ -41,6 +43,22 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control" name="description" id="description" value="{{$task->description}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Due Date</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" name="due_date" id="due_date" value="{{$task->due_date}}">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        YYYY-MM-DD HH:MM:SS
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
