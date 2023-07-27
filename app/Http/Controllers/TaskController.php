@@ -2,75 +2,80 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TaskStoreRequest;
-use App\Http\Requests\TaskUpdateRequest;
+use App\Http\Requests\TaskAssignRequest;
+use App\Http\Requests\TaskStatusUpdateRequest;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
 use App\Notifications\TaskAssigned;
 use App\Notifications\TaskComplete;
+use App\Http\Requests\TaskStoreRequest;
+use App\Http\Requests\TaskUpdateRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
 {
     // List all tasks with status
-    public function index() {
+    public function index()
+    {
         $tasks = Task::all();
         $statuses = Status::all();
         return view('admin.pages.tasks.index', compact('tasks', 'statuses'));
     }
 
     // View for assinging task to user
-    public function formToAssignTask() {
+    public function formToAssignTask()
+    {
         $tasks = Task::all();
         $users = User::all();
         return view('admin.pages.tasks.assign', compact('tasks', 'users'));
     }
 
     // View for adding task
-    public function formToAddTask() {
+    public function formToAddTask()
+    {
         return view('admin.pages.tasks.add');
     }
 
     // Assign Task 
-    public function assignTask(Request $req) {
-        try{
-            if($req->user == 'select-user' || $req->task == 'select-task')
-                return back()->withErrors('Please select a task and a role!');
-            $task = Task::find($req->task); 
-            $user = User::find($req->user);
+    public function assignTask(TaskAssignRequest $req)
+    {
+        try {
+            $task = Task::findOrFail($req->task);
+            $user = User::findOrFail($req->user);
             $task->users()->attach($user);
             $user->notify(new TaskAssigned($task->name));
-            return redirect('/admin/all-tasks')->with('message', 'Task has been assigned successfully!');
-        } catch(\Exception $e){
-            return back()->withErrors('Something went wrong!');
+            return back()->with('message', 'Task has been assigned successfully!');
+        } catch (\Exception $e) {
+            return back()->withErrors('Oops! Something went wrong!');
         }
     }
 
     // Update task status
-    public function updateTaskStatus(Request $req) {
-        try{
-            $task = Task::find($req->taskid);
-            $task->status_id = $req->statusid;
+    public function updateTaskStatus(TaskStatusUpdateRequest $request)
+    {
+        try {
+            $task = Task::findOrFail($request->taskid);
+            $task->status_id = $request->statusid;
 
             // If task status_id is 3 (i.e complete)
-            if($task->status_id == 3){
+            if ($task->status_id == 3) {
                 $task->completed_at = now();
-                User::find(1)->notify(new TaskComplete($req->user()->name, $task->name));
+                User::find(1)->notify(new TaskComplete($request->user()->name, $task->name));
             }
             $task->save();
 
             return back()->with('message', 'Task Status has been updated successfully!');
-
-        }
-        catch(\Exception $e){
-            return back()->withErrors('Something went wrong!');
+        } catch (\Exception $e) {
+            return back()->withErrors('Oops! Something went wrong!');
         }
     }
 
     // Store task details
-    public function store(TaskStoreRequest $req) {
+    public function store(TaskStoreRequest $req)
+    {
         Task::create([
             'name' => $req->name,
             'description' => $req->description,
@@ -82,28 +87,41 @@ class TaskController extends Controller
     }
 
     // View for editing task
-    public function editTask($id) {
-        $task = Task::find($id);
-        return view('admin.pages.tasks.edit', compact('task'));
+    public function editTask($id)
+    {
+        try {
+            $task = Task::findOrFail($id);
+            return view('admin.pages.tasks.edit', compact('task'));
+        } catch (\Exception $e) {
+            return back()->withErrors("Oops! Something went wrong!");
+        }
     }
 
     // Store edited task details
-    public function storeEditedTask(TaskStoreRequest $request) {
-            $task = Task::find($request->taskid);
+    public function storeEditedTask(TaskUpdateRequest $request)
+    {
+        try {
+            // try to find and update the task details
+            $task = Task::findOrFail($request->taskid);
             $request->validate([
-                'due_date' => 'after:'.date('d-m-Y', strtotime($task->created_at)),
+                'due_date' => 'after:' . date('d-m-Y', strtotime($task->created_at)),
             ]);
             $task->update([
                 'name' => $request->name,
                 'description' => $request->description,
                 'due_date' => $request->due_date,
             ]);
-            if(!is_null($request->users)){
-                foreach($request->users as $user){
+            if (!is_null($request->users)) {
+                foreach ($request->users as $user) {
                     $task->users()->detach($user);
                 }
             }
             $task->save();
             return redirect('/admin/all-tasks')->with('message', 'Task details have been updated successfully!');
+        } catch (ValidationException $e) { // catch validation error and show on the previous page
+            return back()->withErrors($e->getMessage());
+        } catch (\Exception $e) { // default error message
+            return back()->withErrors('Oops! Something went wrong!');
+        }
     }
 }

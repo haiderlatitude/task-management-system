@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PermissionAssignRequest;
+use App\Http\Requests\RoleAssignRequest;
+use App\Http\Requests\RoleStoreRequest;
+use App\Http\Requests\RoleUpdateRequest;
 use App\Models\User;
 use App\Notifications\RoleAssigned;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -23,25 +27,24 @@ class RoleNPermissionController extends Controller
     }
 
     // Store new role details
-    public function store(Request $request) {
+    public function store(RoleStoreRequest $request) {
         try{
-            $errors = '';
-            if($request->name == '')
-                return back()->withErrors('Role name cannot be empty!');
+            $errors = [];
             
             $roles = explode(',', $request->name);
-            foreach($roles as $role){
+            foreach($roles as $key => $value){
                 try{
-                    if($role != '')
-                        Role::create(['name' => trim(preg_replace('/[^A-Za-z ]/', '', $role))]);
+                    if($value != '')
+                        Role::create(['name' => trim(preg_replace('/[^A-Za-z ]/', '', $value))]);
                 }
                 catch(\Exception $e){
-                    $errors .= $e->getMessage().' ';
+                    $errors[$key] = str_replace(" for guard `web`.", '', $e->getMessage());
+                    $errors[$key++];
                 }
             }
 
             if($errors != '')
-                return redirect('/admin/all-roles')->withErrors($errors);
+                return back()->withErrors($errors);
 
             return redirect('/admin/all-roles')->with('message', 'All role(s) have been added successfully!');
         }
@@ -57,17 +60,25 @@ class RoleNPermissionController extends Controller
     }
 
     // Store edited role details
-    public function storeEditedRole(Request $request, $roleId) {
-        $role = Role::findById($roleId);
-        if($role->name != 'admin')
-            $role->name = $request->name;
-        if($request->name == '')
-            return redirect('/admin/all-roles')->withErrors('Role name cannot be empty!');
+    public function storeEditedRole(RoleUpdateRequest $request, $roleId) {
+        try {
+            $request->validate([
+                'name' => 'unique:roles,name,'.$roleId,
+            ]);
+            $role = Role::findById($roleId);
 
-        $role->syncPermissions($request->permissions);
-        $role->save();
+            if($role->name != 'admin')
+                $role->name = $request->name;
 
-        return redirect('/admin/all-roles')->with('message', 'Role details have been updated successfully!');
+            $role->syncPermissions($request->permissions);
+            $role->save();
+
+            return redirect('/admin/all-roles')->with('message', 'Role details have been updated successfully!');
+        } catch(ValidationException $e) {
+            return back()->withErrors('Role name already exists!');
+        } catch(\Exception $e) {
+            return back()->withErrors('Oops! Something went wrong!');
+        }
     }
 
     // View for assigning role to a user
@@ -78,10 +89,8 @@ class RoleNPermissionController extends Controller
     }
 
     // Assign role to a user
-    public function assignRoleToUser(Request $request) {
-        try{
-            if($request->roles == '' || $request->user == 'select-user')
-                return back()->withErrors('Please select at least one Role and a User!');
+    public function assignRoleToUser(RoleAssignRequest $request) {
+        try {
             $user = User::find($request->user);
             foreach($request->roles as $roleId){
                 $role = Role::findById($roleId);
@@ -90,7 +99,7 @@ class RoleNPermissionController extends Controller
             $user->notify(new RoleAssigned());
             return redirect('/admin/all-roles')->with('message', 'Role(s) have been assigned successfully!');
         } catch(\Exception $e){
-            return redirect('/admin/assign-role')->withErrors('Something went wrong!');
+            return back()->withErrors('Something went wrong!');
         }
     }
 
@@ -108,9 +117,7 @@ class RoleNPermissionController extends Controller
     }
 
     // Assign permission to a role
-    public function assignPermissionToRole(Request $request) {
-        if($request->permissions == '' || $request->role == 'select-role')
-            return back()->withErrors('Please select at least one permission and a Role!');
+    public function assignPermissionToRole(PermissionAssignRequest $request) {
         $role = Role::findById($request->role);
         foreach($request->permissions as $permissionId){
             $permission = Permission::findById($permissionId);

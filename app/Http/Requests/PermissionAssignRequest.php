@@ -4,14 +4,16 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TaskUpdateRequest extends FormRequest
+class PermissionAssignRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        if(request()->user()->id == 1)
+            return true;
+        return false;
     }
 
     /**
@@ -22,9 +24,8 @@ class TaskUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'description' => 'required',
-            'due_date' => 'required|date'
+            'permissions' => 'required',
+            'role' => 'required',
         ];
     }
 }

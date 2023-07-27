@@ -3,13 +3,15 @@
 @section('main-content')
     <div class="main-content">
         @if(session()->has('message'))
-            <div class="card py-3 px-5 text-success">
+            <div class="alert alert-success">
                 <b>{{session('message')}}</b>
             </div>
         @endif
         @if ($errors->count() > 0)
-            <div class="card py-3 px-5 text-red-600">
-                <b>{{$errors->first()}}</b>
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    <ul><b>{{$error}}</b></ul>
+                @endforeach
             </div>
         @endif
 

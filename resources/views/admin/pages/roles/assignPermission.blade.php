@@ -3,13 +3,19 @@
 @section('main-content')
     <div class="main-content">
         @if(session()->has('message'))
-            <div class="card py-3 px-5 text-success">
+            <div class="alert alert-success">
                 {{session('message')}}
             </div>
         @endif
         @if ($errors->count() > 0)
-            <div class="card py-3 px-5 text-danger">
-                {{$errors->first()}}
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>
+                            <b>{{$error}}</b>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         @endif
 
@@ -24,7 +30,7 @@
                 </select>
         
                 <select class="w-full rounded-lg my-3 bg-gray-100 text-dark px-3 py-2 outline-none outline-blue-200" name="role" id="role">
-                    <option value="select-role" selected>-- Select Role --</option>
+                    <option value="" selected>-- Select Role --</option>
                     @foreach ($roles as $role)
                         <option id="{{$role->id}}" value="{{$role->id}}">{{$role->name}}</option>
                     @endforeach

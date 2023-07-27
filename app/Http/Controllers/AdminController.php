@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Notifications\RoleAssigned;
 use App\Notifications\WelcomeNotification;
@@ -12,37 +13,37 @@ use Spatie\Permission\Models\Role;
 class AdminController extends Controller
 {
     // All Users
-    public function index() {
+    public function index()
+    {
         $users = User::withTrashed()->get();
         return view('admin.pages.users.index', compact('users'));
     }
 
     // Listing Deleted or Active Users
-    public function deletedOrActiveUsers(Request $request) {
-        if(($request->active == 'on' && $request->deleted == 'on') || ($request->active == NULL && $request->deleted == NULL)){
+    public function deletedOrActiveUsers(Request $request)
+    {
+        if (($request->active == 'on' && $request->deleted == 'on') || ($request->active == NULL && $request->deleted == NULL)) {
             return redirect('/admin/all-users');
-        }
-
-        elseif($request->deleted == 'on'){
+        } elseif ($request->deleted == 'on') {
             $users = User::onlyTrashed()->get();
             return view('admin.pages.users.index', compact('users'));
-        }
-
-        else{
+        } else {
             $users = User::all();
             return view('admin.pages.users.index', compact('users'));
         }
     }
 
     // View for adding user
-    public function addUser() {
+    public function addUser()
+    {
         $roles = Role::all();
         return view('admin.pages.users.add', compact('roles'));
     }
 
     // Storing the new user data
-    public function storeUser(UserStoreRequest $request) {
-        try{
+    public function storeUser(UserStoreRequest $request)
+    {
+        try {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -52,71 +53,66 @@ class AdminController extends Controller
                 'phone' => $request->phone,
                 'cnic' => $request->cnic,
             ]);
-            
+
             $user->assignRole(Role::findById($request->roleId));
             $user->notify(new RoleAssigned());
-                
+
             $user->notify(new WelcomeNotification());
-    
+
             return back()->with('message', 'User has been registered successfully!');
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->withErrors('Something went wrong please try again later!');
         }
     }
 
     // View for editing user details
-    public function editUser(Request $request) {
-        $user = User::find($request->userid);
+    public function editUser($id)
+    {
+        $user = User::find($id);
         return view('admin.pages.users.edit', compact('user'));
     }
 
     // Store the edited user details
-    public function storeEditedUser(Request $request) {
-        try{
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required|unique:users,email,'.$request->userid,
-                'dob' => 'required',
-                'phone' => 'required|max:11',
-                'cnic' => 'required|max:15',
-            ]);
-            $user = User::find($request->userid);
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'dob' => $request->dob,
-                'phone' => $request->phone,
-                'cnic' => $request->cnic,
-            ]);
-            
-            if(!$request->roles == null){
-                foreach($request->roles as $roleId){
-                    $role = Role::find($roleId);
-                    $user->removeRole($role);
-                }
-            }
-            $user->save();
+    public function storeEditedUser(UserUpdateRequest $request)
+    {
+        $request->validate([
+            'email' => 'required|unique:users,email,' . $request->userid,
+        ]);
+        $user = User::find($request->userid);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'dob' => $request->dob,
+            'phone' => $request->phone,
+            'cnic' => $request->cnic,
+        ]);
 
-            return redirect('/admin/all-users')->with('message', 'User details have been updated successfully!');
-        } catch(\Exception $e){
-            return redirect('/admin/all-users')->withErrors($e->getMessage());
+        if (!$request->roles == null) {
+            foreach ($request->roles as $roleId) {
+                $role = Role::find($roleId);
+                $user->removeRole($role);
+            }
         }
+        $user->save();
+
+        return redirect('/admin/all-users')->with('message', 'User details have been updated successfully!');
     }
 
     // Soft Delete User
-    public function deleteUser(Request $request) {
-        $user = User::find($request->userid);
-        if($user->hasRole('admin'))
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+        if ($user->hasRole('admin'))
             return back()->withErrors('Admin account cannot be deleted!');
-        
+
         $user->delete();
         return redirect('/admin/all-users')->with('message', 'User account has been deleted successfully!');
     }
 
     // Restore the soft deleted User
-    public function restoreUser(Request $request) {
-        User::withTrashed()->find($request->userid)->restore();
+    public function restoreUser($id)
+    {
+        User::withTrashed()->find($id)->restore();
 
         return redirect('/admin/all-users')->with('message', 'User account has been restored successfully!');
     }

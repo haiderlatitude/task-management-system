@@ -104,22 +104,19 @@
                                   @endif
                                 </td>
                                 <td>
-                                    <form action="/admin/edit-user" class="inline" method="POST">@csrf
-                                      <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
+                                    <form action="/admin/edit-user/{{$user->id}}" class="inline" method="GET">
                                         <button class="bi bi-pencil btn btn-primary text-white @if ($user->hasRole('admin'))
                                           col-10
                                         @endif"></button>
                                     </form>
                                     @if ($user->deleted_at == null)
-                                      <form action="/admin/delete-user" method="POST" class="inline" @if ($user->hasRole('admin'))
+                                      <form action="/admin/delete-user/{{$user->id}}" method="GET" class="inline" @if ($user->hasRole('admin'))
                                         hidden
-                                      @endif>@csrf
-                                        <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
+                                      @endif>
                                           <button class="bi bi-trash text-white btn btn-danger"></button>
                                       </form>
                                     @else
-                                      <form action="/admin/restore-user" method="POST" class="inline">@csrf
-                                        <input type="hidden" name="userid" id="userid" value="{{$user->id}}">
+                                      <form action="/admin/restore-user/{{$user->id}}" method="GET" class="inline">
                                           <button><i class="bi bi-bootstrap-reboot text-white btn btn-primary"></i></button>
                                       </form>
                                     @endif

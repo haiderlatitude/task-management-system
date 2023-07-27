@@ -55,10 +55,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/all-users', [AdminController::class, 'index']);
         Route::get('/add-user', [AdminController::class, 'addUser']);
         Route::post('/store-user', [AdminController::class, 'storeUser']);
-        Route::post('/edit-user', [AdminController::class, 'editUser']);
+        Route::get('/edit-user/{id}', [AdminController::class, 'editUser']);
         Route::put('/store-edited-user', [AdminController::class, 'storeEditedUser']);
-        Route::post('/delete-user', [AdminController::class, 'deleteUser']);
-        Route::post('/restore-user', [AdminController::class, 'restoreUser']);
+        Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser']);
+        Route::get('/restore-user/{id}', [AdminController::class, 'restoreUser']);
         Route::post('/deleted-or-active-users', [AdminController::class, 'deletedOrActiveUsers']);
 
         // Roles and Permissions 
@@ -77,9 +77,9 @@ Route::middleware('auth')->group(function () {
     // User Routes
     Route::prefix('users')->group(function () {
         Route::get('/{username}/my-tasks', [UserController::class, 'userTasks']);
-        Route::post('/{username}/update-details', [TaskController::class, 'updateTaskStatus']);
         Route::get('/{username}/my-roles', [UserController::class, 'userRoles']);
         Route::get('/{username}/my-permissions', [UserController::class, 'userPermissions']);
+        Route::post('/{username}/update-details', [TaskController::class, 'updateTaskStatus']);
     });
 
     // Profile Routes

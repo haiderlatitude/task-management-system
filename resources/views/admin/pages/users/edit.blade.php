@@ -3,13 +3,15 @@
 @section('main-content')
     <div class="main-content">
         @if(session()->has('message'))
-            <div class="card py-3 px-5 text-success">
+            <div class="alert alert-success">
                 <b>{{session('message')}}</b>
             </div>
         @endif
-        @if($errors->count() > 0)
-            <div class="card py-3 px-5 text-danger">
-                <b>{{$errors->first()}}</b>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                  <ul><b>{{$error}}</b></ul>
+                @endforeach
             </div>
         @endif
         <form action="/admin/store-edited-user" method="POST">
@@ -29,7 +31,7 @@
                                         <i class="bi bi-person"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" name="name" id="name" value="{{$user->name}}">
+                                <input type="text" class="form-control" name="name" id="name" value="{{$user->name}}" autofocus>
                             </div>
                         </div>
                         <div class="form-group">

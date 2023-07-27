@@ -3,13 +3,17 @@
 @section('main-content')
     <div class="main-content">
         @if(session()->has('message'))
-            <div class="card py-3 px-5 text-success">
+            <div class="alert alert-success">
                 <b>{{session('message')}}</b>
             </div>
         @endif
-        @if($errors->count() > 0)
-            <div class="card py-3 px-5 text-danger">
-                <b>{{$errors->first()}}</b>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li><b>{{$error}}</b></li>
+                    @endforeach
+                </ul>
             </div>
         @endif
         <form action="/admin/store-edited-role/{{$role->id}}" method="POST">
