@@ -24,7 +24,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="mt-2"><b>{{ucfirst($category).'ly'}} Report</b></h4>
+                  <h4 class="mt-2"><b>{{ucfirst($category).'ly'}} Report ({{$timePeriod}})</b></h4>
                 </div>
                 <div class="card-body">
                     <div class="flex justify-between">
