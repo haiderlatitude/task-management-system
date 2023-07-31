@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleNPermissionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -72,6 +73,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/all-permissions', [RoleNPermissionController::class, 'allPermissions']);
         Route::get('/assign-permission', [RoleNPermissionController::class, 'assignPermission']);
         Route::post('/assign-permission-to-role', [RoleNPermissionController::class, 'assignPermissionToRole']);
+
+        // Reports
+        Route::get('/weekly-report', [ReportController::class, 'weeklyReport']);
+        Route::get('/monthly-report', [ReportController::class, 'monthlyReport']);
+        Route::post('/monthly-report', [ReportController::class, 'monthlyReport']);
+        Route::get('/yearly-report', [ReportController::class, 'yearlyReport']);
+        Route::post('/yearly-report', [ReportController::class, 'yearlyReport']);
     });
 
     // User Routes

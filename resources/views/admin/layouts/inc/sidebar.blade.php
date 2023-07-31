@@ -47,6 +47,17 @@
                 </ul>
             </li>
         </ul>
+        <ul class="sidebar-menu">
+            <li class="menu-header">Reports</li>
+            <li>
+                <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="clipboard"></i><span>Reports</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="/admin/weekly-report">Weekly</a></li>
+                    <li><a class="nav-link" href="/admin/monthly-report">Monthly</a></li>
+                    <li><a class="nav-link" href="/admin/yearly-report">Yearly</a></li>
+                </ul>
+            </li>
+        </ul>
         @else
         <ul class="sidebar-menu">
             <li>

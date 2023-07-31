@@ -49,7 +49,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Date</label>
+                            <label>Due Date</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
