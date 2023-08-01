@@ -42,14 +42,25 @@ class ReportController extends Controller
     }
 
     public function yearlyReport(Request $request) {
-        $tasksCreated = Task::yearlyTasksCreated($request->year);
-        $tasksCompleted = Task::yearlyTasksCompleted($request->year);
+        $year = null;
+        $startYear = (int)substr(Task::find(1)->created_at, 0, 4);
+        $endYear = (int)substr(now(), 0, 4);
+
+        if($request->year < $startYear || $request->year > $endYear){
+            $tasksCreated = Task::yearlyTasksCreated(null);
+            $tasksCompleted = Task::yearlyTasksCompleted(null);
+            $year = 'this year';
+        } else {
+            $tasksCreated = Task::yearlyTasksCreated($request->year);
+            $tasksCompleted = Task::yearlyTasksCompleted($request->year);
+            $year = $request->year;
+        }
 
         return view('admin.pages.reports.report',
         [
             'tasks' => $tasksCreated,
             'tasksCompleted' => $tasksCompleted,
-            'timePeriod' => $request->year ? $request->year:'this year',
+            'timePeriod' => $year,
             'category' => 'year'
         ]);
     }

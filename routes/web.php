@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleNPermissionController;
@@ -80,6 +81,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/monthly-report', [ReportController::class, 'monthlyReport']);
         Route::get('/yearly-report', [ReportController::class, 'yearlyReport']);
         Route::post('/yearly-report', [ReportController::class, 'yearlyReport']);
+        Route::get('/export-report/{timePeriod}', [PdfController::class, 'exportReport']);
     });
 
     // User Routes
