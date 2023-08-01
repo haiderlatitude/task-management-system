@@ -12,6 +12,7 @@ use App\Notifications\TaskComplete;
 use App\Http\Requests\TaskStoreRequest;
 use App\Http\Requests\TaskUpdateRequest;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -63,7 +64,7 @@ class TaskController extends Controller
             // If task status_id is 3 (i.e complete)
             if ($task->status_id == 3) {
                 $task->completed_at = now();
-                User::find(1)->notify(new TaskComplete($request->user()->name, $task->name));
+                User::find(1)->notify(new TaskComplete($request->user()->name, $task->name)); // Notify admin
             }
             $task->save();
 
@@ -76,6 +77,10 @@ class TaskController extends Controller
     // Store task details
     public function store(TaskStoreRequest $req)
     {
+        $req->validate([
+            'due_date' => 'after:today',
+        ]);
+        
         Task::create([
             'name' => $req->name,
             'description' => $req->description,
@@ -92,8 +97,10 @@ class TaskController extends Controller
         try {
             $task = Task::findOrFail($id);
             return view('admin.pages.tasks.edit', compact('task'));
+        } catch (ModelNotFoundException $e) {
+            return back()->withErrors('Unfortunately, we could not find the task with id: '.$id);
         } catch (\Exception $e) {
-            return back()->withErrors("Oops! Something went wrong!");
+            return back()->withErrors('Oops! Something went wrong, please try again!');
         }
     }
 
@@ -118,10 +125,10 @@ class TaskController extends Controller
             }
             $task->save();
             return redirect('/admin/all-tasks')->with('message', 'Task details have been updated successfully!');
-        } catch (ValidationException $e) { // catch validation error and show on the previous page
+        } catch (ValidationException $e) {
             return back()->withErrors($e->getMessage());
-        } catch (\Exception $e) { // default error message
-            return back()->withErrors('Oops! Something went wrong!');
+        } catch (\Exception $e) {
+            return back()->withErrors('Oops! Something went wrong, please try again!');
         }
     }
 }

@@ -22,14 +22,21 @@ class ReportController extends Controller
     }
 
     public function monthlyReport(Request $request) {
-        $tasksCreated = Task::monthlyTasksCreated($request->month);
-        $tasksCompleted = Task::monthlyTasksCompleted($request->month);
+        $monthNumber = null;
+        try{
+            $monthNumber = (int)substr(Carbon::parse('1 '.$request->month), 5, 2);
+        } catch(\Exception $e){
+            $monthNumber = (int)$request->month;
+        }
+
+        $tasksCreated = Task::monthlyTasksCreated($monthNumber);
+        $tasksCompleted = Task::monthlyTasksCompleted($monthNumber);
 
         return view('admin.pages.reports.report',
         [
             'tasks' => $tasksCreated,
             'tasksCompleted' => $tasksCompleted,
-            'timePeriod' => $request->month ? date('F', mktime(0, 0, 0, $request->month, 1)):'this month',
+            'timePeriod' => $request->month ? date('F', mktime(0, 0, 0, $monthNumber, 1)):'this month',
             'category' => 'month'
         ]);
     }
