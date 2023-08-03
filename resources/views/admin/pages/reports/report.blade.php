@@ -7,14 +7,19 @@
             <b>{{session('message')}}</b>
         </div>
       @endif
+      @if($message != null)
+        <div class="alert alert-warning">
+            <b>{{$message}}</b>
+        </div>
+      @endif
       @if ($errors->count() > 0)
         <div class="alert alert-danger">
           <ul>
             @foreach ($errors->all() as $error)
-                <li>
-                    <b>{{$error}}</b>
-                </li>
-          @endforeach
+              <li>
+                  <b>{{$error}}</b>
+              </li>
+            @endforeach
           </ul>
         </div>
       @endif
@@ -23,9 +28,11 @@
           <div class="row">
             <div class="col-12">
               <div class="card">
-                <div class="card-header flex justify-between content-center">
+                <div class="card-header flex justify-between">
                   <h4 class="mt-2"><b>{{ucfirst($category).'ly'}} Report ({{$timePeriod}})</b></h4>
-                  <form action="/admin/export-report/{{$timePeriod}}">
+                  <form action="/admin/export-{{$category}}ly-report" method="POST">@csrf
+                    <input type="hidden" name="tasks" value="{{$tasks}}">
+                    <input type="hidden" name="timePeriod" value="{{$timePeriod}}">
                     <button class="bg-blue-500 hover:bg-blue-600 focus:bg-blue-600 px-3 py-2 text-white text-sm rounded-sm mx-2">Export</button>
                   </form>
                 </div>
@@ -43,9 +50,9 @@
                             </div>
                         </div>
                         @if(in_array($category, ['month', 'year']))
-                            <form action="/admin/{{$category.'ly'}}-report" method="POST" class="inline">
-                                <label for="{{$category}}">{{ucfirst($category)}}:</label>@csrf
-                                <input type="text" class="border border-gray-100 rounded-sm focus:outline-none px-2 py-2" name="{{$category}}"
+                            <form action="/admin/{{$category.'ly'}}-report" method="POST" class="inline w-3/6">@csrf
+                                <label for="{{$category}}">{{ucfirst($category)}}:</label>
+                                <input type="text" class="border border-gray-100 rounded-sm focus:outline-none px-2 py-2 w-4/6" name="{{$category}}"
                                         placeholder="@if($category == 'month') Month Number only, e.g 1 for January @else Usage year - 2023 @endif">
                                 <button class="text-xs bg-blue-500 hover:bg-blue-700 rounded-sm px-3 py-2 text-white">Search</button>
                             </form>

@@ -9,6 +9,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleNPermissionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/ex', function () {
+    $tasks = Task::all();
+    return view('admin.pages.reports.export', compact('tasks'));
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -81,7 +86,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/monthly-report', [ReportController::class, 'monthlyReport']);
         Route::get('/yearly-report', [ReportController::class, 'yearlyReport']);
         Route::post('/yearly-report', [ReportController::class, 'yearlyReport']);
-        Route::get('/export-report/{timePeriod}', [PdfController::class, 'exportReport']);
+        Route::post('/export-weekly-report', [PdfController::class, 'exportWeeklyReport']);
+        Route::post('/export-monthly-report', [PdfController::class, 'exportMonthlyReport']);
+        Route::post('/export-yearly-report', [PdfController::class, 'exportYearlyReport']);
     });
 
     // User Routes

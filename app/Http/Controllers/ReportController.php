@@ -17,15 +17,20 @@ class ReportController extends Controller
             'tasks' => $tasksCreatedThisWeek,
             'tasksCompleted' => $tasksCompletedThisWeek,
             'timePeriod' => 'this week',
-            'category' => 'week'
+            'category' => 'week',
+            'message' => null,
         ]);
     }
 
     public function monthlyReport(Request $request) {
-        $monthNumber = null;
-        if($request->month < 1 || $request->month > 12 || preg_match('/[^1-9]/',$request->month)){
+        $monthNumber = null; $message = null;
+        if ($request->month == null) {
             $tasksCreated = Task::monthlyTasksCreated(null);
             $tasksCompleted = Task::monthlyTasksCompleted(null);
+        } elseif ($request->month < 1 || $request->month > 12 || preg_match('/[^1-9]/', $request->month)){
+            $tasksCreated = Task::monthlyTasksCreated(null);
+            $tasksCompleted = Task::monthlyTasksCompleted(null);
+            $message = 'Month can only be a valid number!';
         } else {
             $tasksCreated = Task::monthlyTasksCreated($request->month);
             $tasksCompleted = Task::monthlyTasksCompleted($request->month);
@@ -37,23 +42,27 @@ class ReportController extends Controller
             'tasks' => $tasksCreated,
             'tasksCompleted' => $tasksCompleted,
             'timePeriod' => $monthNumber ? date('F', mktime(0, 0, 0, $monthNumber, 1)):'this month',
-            'category' => 'month'
+            'category' => 'month',
+            'message' => $message,
         ]);
     }
 
     public function yearlyReport(Request $request) {
-        $year = null;
+        $year = (int)$request->year; $message = null;
         $startYear = (int)substr(Task::find(1)->created_at, 0, 4);
         $endYear = (int)substr(now(), 0, 4);
-
-        if($request->year < $startYear || $request->year > $endYear){
+        if ($year == null) {
             $tasksCreated = Task::yearlyTasksCreated(null);
             $tasksCompleted = Task::yearlyTasksCompleted(null);
             $year = 'this year';
+        } elseif ($year >= $startYear && $year <= $endYear){
+            $tasksCreated = Task::yearlyTasksCreated($year);
+            $tasksCompleted = Task::yearlyTasksCompleted($year);
         } else {
-            $tasksCreated = Task::yearlyTasksCreated($request->year);
-            $tasksCompleted = Task::yearlyTasksCompleted($request->year);
-            $year = $request->year;
+            $tasksCreated = Task::yearlyTasksCreated(null);
+            $tasksCompleted = Task::yearlyTasksCompleted(null);
+            $year = 'this year';
+            $message = 'Year can only be from start of usage of this app to current year!';
         }
 
         return view('admin.pages.reports.report',
@@ -61,7 +70,8 @@ class ReportController extends Controller
             'tasks' => $tasksCreated,
             'tasksCompleted' => $tasksCompleted,
             'timePeriod' => $year,
-            'category' => 'year'
+            'category' => 'year',
+            'message' => $message,
         ]);
     }
 }
