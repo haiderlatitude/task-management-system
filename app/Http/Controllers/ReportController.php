@@ -27,7 +27,7 @@ class ReportController extends Controller
         if ($request->month == null) {
             $tasksCreated = Task::monthlyTasksCreated(null);
             $tasksCompleted = Task::monthlyTasksCompleted(null);
-        } elseif ($request->month < 1 || $request->month > 12 || preg_match('/[^1-9]/', $request->month)){
+        } elseif (preg_match('/[^1-9]/', $request->month) || $request->month < 1 || $request->month > 12){
             $tasksCreated = Task::monthlyTasksCreated(null);
             $tasksCompleted = Task::monthlyTasksCompleted(null);
             $message = 'Month can only be a valid number!';
