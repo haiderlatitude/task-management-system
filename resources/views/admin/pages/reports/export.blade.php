@@ -1,17 +1,3 @@
-<style>
-
-  /* table {
-    border: 1px solid black; width: 100%;
-  } */
-
-  /* th, td{
-    text-align: start; line-height: 25px;
-  } */
-
-  /* #taskReport {
-    display: flex; justify-content: center; font-size: 30px; font-weight: 900; margin-bottom: 90px;
-  } */
-</style>
 <div style="text-align: center; font-size: 30px; font-weight: 900; margin-bottom: 90px;" id="taskReport">
   Task Report ({{$timePeriod}})
 </div>

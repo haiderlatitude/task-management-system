@@ -16,7 +16,7 @@
       <link rel="stylesheet" href="{{asset('admin/assets/css/style.css')}}">
       <link rel="stylesheet" href="{{asset('admin/assets/css/components.css')}}">
       <!-- Custom style CSS -->
-      <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+      <link rel="stylesheet" href="{{asset('admin/assets/css/custom.css')}}">
       {{--    <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/favicon.ico')}}"/>--}}
       <link rel="stylesheet" href="{{asset('admin/assets/bundles/izitoast/css/iziToast.min.css')}}">
       <link href="{{url('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css')}}" rel="stylesheet"/>
@@ -30,5 +30,6 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       {{-- Bootstrap icons --}}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.41.1/apexcharts.min.js" integrity="sha512-Gpg0M5UOTFSHGglemXUOUzL1LyO8MT0fxmEAjGN8jNlY6oSOsLerF1/vuXrqJXKyV5QIay12trwDDhmRJHZisA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       @stack('styles')
 </head>

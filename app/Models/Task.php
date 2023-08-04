@@ -16,6 +16,7 @@ class Task extends Model
         'description',
         'due_date',
         'creator_id',
+        'day'
     ];
 
     public function users() : BelongsToMany {

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('status_id')->references('id')->on('statuses')->cascadeOnDelete();
             $table->unsignedBigInteger('creator_id')->nullable();
             $table->foreign('creator_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->string('day');
             $table->dateTime('due_date');
             $table->dateTime('completed_at')->nullable();
             $table->timestamps();

@@ -11,6 +11,7 @@ use App\Notifications\TaskAssigned;
 use App\Notifications\TaskComplete;
 use App\Http\Requests\TaskStoreRequest;
 use App\Http\Requests\TaskUpdateRequest;
+use App\Models\Day;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -80,12 +81,13 @@ class TaskController extends Controller
         $req->validate([
             'due_date' => 'after:today',
         ]);
-        
+        // dd(Day::where('name', now()->format('l'))->first()->id, now()->dayOfWeek);
         Task::create([
             'name' => $req->name,
             'description' => $req->description,
             'due_date' => Carbon::parse($req->due_date)->endOfDay(),
             'creator_id' => request()->user()->id,
+            'day' => now()->format('l'),
         ]);
 
         return redirect('/admin/add-task')->with('message', 'Task has been saved successfully!');

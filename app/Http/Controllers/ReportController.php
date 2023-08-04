@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\WeeklyTasksBarChart;
 use App\Models\Task;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function weeklyReport() {
+    public function weeklyReport(WeeklyTasksBarChart $chart) {
         $tasksCreatedThisWeek = Task::weeklyTasksCreated();
         $tasksCompletedThisWeek = Task::weeklyTasksCompleted();
+
 
         return view('admin.pages.reports.report',
         [
@@ -19,6 +20,7 @@ class ReportController extends Controller
             'timePeriod' => 'this week',
             'category' => 'week',
             'message' => null,
+            'chart' => $chart->build(),
         ]);
     }
 

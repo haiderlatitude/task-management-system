@@ -24,6 +24,26 @@
         </div>
       @endif
     <section class="section">
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="mt-2"><b>{{ucfirst($category).'ly'}} Tasks Evaluation</b></h4>
+              </div>
+              <div class="card-body">
+                <div>
+                  {!! $chart->container() !!}
+                  <script src="{{ $chart->cdn() }}"></script>
+                  {!! $chart->script() !!}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
         <div class="section-body">
           <div class="row">
             <div class="col-12">
@@ -126,5 +146,5 @@
     </div>
 @endsection
 @push('styles')
-    <link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
+  <link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
 @endpush
