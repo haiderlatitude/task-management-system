@@ -8,23 +8,30 @@ use ArielMejiaDev\LarapexCharts\LarapexChart;
 class YearlyTasksBarChart
 {
     protected $chart;
-    protected $years = array();
+    protected $years = [];
 
     public function __construct(LarapexChart $chart)
     {
         $this->chart = $chart;
-        $this->years = Task::pluck('created_at');
+        $yearsCollection = Task::pluck('created_at');
+        foreach($yearsCollection as $item){
+            if(!in_array(substr((string)$item, 0, 4), $this->years)){
+                array_push($this->years, substr((string)$item, 0, 4));
+            }
+        }
     }
 
     public function build(): \ArielMejiaDev\LarapexCharts\BarChart
     {
+        $createdData = [];
+        $completedData = [];
+        foreach($this->years as $year){
+            array_push($createdData, Task::yearlyTasksCreated($year)->count());
+            array_push($completedData, Task::yearlyTasksCompleted($year)->count());
+        }
         return $this->chart->barChart()
-            ->addData('Created', [
-                
-            ])
-            ->addData('Completed', [
-                
-            ])
-            ->setXAxis([substr(Task::find(1)->created_at, 0, 4)]);
+            ->addData('Created', [...$createdData])
+            ->addData('Completed', [...$completedData])
+            ->setXAxis($this->years);
     }
 }
