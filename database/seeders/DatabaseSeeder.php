@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
         $user->notify(new RoleAssigned());
         $this->call(StatusSeeder::class);
         $this->call(PermissionSeeder::class);
+        $this->call(DaysSeeder::class);
 
         // Task::factory(1000)->create();
     }

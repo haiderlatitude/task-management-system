@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\MonthlyTasksBarChart;
 use App\Charts\WeeklyTasksBarChart;
+use App\Charts\YearlyTasksBarChart;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -24,7 +26,7 @@ class ReportController extends Controller
         ]);
     }
 
-    public function monthlyReport(Request $request) {
+    public function monthlyReport(Request $request, MonthlyTasksBarChart $chart) {
         $monthNumber = null; $message = null;
         if ($request->month == null) {
             $tasksCreated = Task::monthlyTasksCreated(null);
@@ -46,10 +48,11 @@ class ReportController extends Controller
             'timePeriod' => $monthNumber ? date('F', mktime(0, 0, 0, $monthNumber, 1)):'this month',
             'category' => 'month',
             'message' => $message,
+            'chart' => $chart->build(),
         ]);
     }
 
-    public function yearlyReport(Request $request) {
+    public function yearlyReport(Request $request, YearlyTasksBarChart $chart) {
         $year = (int)$request->year; $message = null;
         $startYear = (int)substr(Task::find(1)->created_at, 0, 4);
         $endYear = (int)substr(now(), 0, 4);
@@ -74,6 +77,7 @@ class ReportController extends Controller
             'timePeriod' => $year,
             'category' => 'year',
             'message' => $message,
+            'chart' => $chart->build(),
         ]);
     }
 }

@@ -16,7 +16,8 @@ class Task extends Model
         'description',
         'due_date',
         'creator_id',
-        'day'
+        'created_day_id',
+        'completed_day_id',
     ];
 
     public function users() : BelongsToMany {
@@ -29,6 +30,10 @@ class Task extends Model
 
     public function status() {
         return $this->belongsTo(Status::class,'status_id','id');
+    }
+
+    public function day() {
+        return $this->belongsTo(Day::class);
     }
 
     public function scopeWeeklyTasksCreated($query) {

@@ -65,6 +65,7 @@ class TaskController extends Controller
             // If task status_id is 3 (i.e complete)
             if ($task->status_id == 3) {
                 $task->completed_at = now();
+                $task->completed_day_id = Day::where('name', now()->format('l'))->first()->id;
                 User::find(1)->notify(new TaskComplete($request->user()->name, $task->name)); // Notify admin
             }
             $task->save();
@@ -87,7 +88,7 @@ class TaskController extends Controller
             'description' => $req->description,
             'due_date' => Carbon::parse($req->due_date)->endOfDay(),
             'creator_id' => request()->user()->id,
-            'day' => now()->format('l'),
+            'created_day_id' => Day::where('name', now()->format('l'))->first()->id,
         ]);
 
         return redirect('/admin/add-task')->with('message', 'Task has been saved successfully!');
