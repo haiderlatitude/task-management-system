@@ -3,7 +3,7 @@
 @section('main-content')
     <div class="main-content">
       @if(session()->has('message'))
-        <div class="card text-success px-3 py-3">
+        <div class="alert alert-success">
           <b>{{session('message')}}</b>
         </div>
       @endif
@@ -15,16 +15,30 @@
           :lastWeekUsers="$lastWeekUsers"
         />
         <div class="row">
-          <div class="col-12 col-sm-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-lg-6">
             <div class="card ">
               <div class="card-header">
                 <h4><b>Overall Tasks Analysis</b></h4>
               </div>
               <div class="card-body">
                 <div>
-                  {!! $chart->container() !!}
-                  <script src="{{ $chart->cdn() }}"></script>
-                  {!! $chart->script() !!}
+                  {!! $lineChart->container() !!}
+                  <script src="{{ $lineChart->cdn() }}"></script>
+                  {!! $lineChart->script() !!}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h4><b>Overall Tasks Analysis</b></h4>
+              </div>
+              <div class="card-body">
+                <div>
+                  {!! $barChart->container() !!}
+                  <script src="{{ $barChart->cdn() }}"></script>
+                  {!! $barChart->script() !!}
                 </div>
               </div>
             </div>

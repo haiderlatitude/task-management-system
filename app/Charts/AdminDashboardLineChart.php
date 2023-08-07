@@ -47,6 +47,6 @@ class AdminDashboardLineChart
                 Task::monthlyTasksCompleted(11)->count(),
                 Task::monthlyTasksCompleted(12)->count(),
             ])
-            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
+            ->setXAxis(['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
     }
 }

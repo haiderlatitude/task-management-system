@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\AdminDashboardBarChart;
 use App\Charts\AdminDashboardLineChart;
 use App\Models\Task;
 use App\Models\User;
@@ -9,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
-    public function index(AdminDashboardLineChart $chart)
+    public function index(AdminDashboardLineChart $lineChart, AdminDashboardBarChart $barChart)
     {
         if (Auth::user()->hasRole('admin')) {
             $tasks = Task::all();
@@ -21,7 +22,8 @@ class DashboardController extends Controller
                 'users' => $users,
                 'completedTasks' => $completedTasks,
                 'lastWeekUsers' => $lastWeekUsers,
-                'chart' => $chart->build(),
+                'lineChart' => $lineChart->build(),
+                'barChart' => $barChart->build(),
             ]);
         } else{
             $user = auth()->user();
