@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\AdminDashboardLineChart;
 use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(AdminDashboardLineChart $chart)
     {
         if (Auth::user()->hasRole('admin')) {
             $tasks = Task::all();
             $users = User::all();
             $completedTasks = Task::where('status_id', '3')->get();
             $lastWeekUsers = User::where('created_at', '>=', Carbon::now()->subDays(7));
-            return view('admin.dashboard', compact('tasks', 'users', 'completedTasks', 'lastWeekUsers'));
+            return view('admin.dashboard',[
+                'tasks' => $tasks,
+                'users' => $users,
+                'completedTasks' => $completedTasks,
+                'lastWeekUsers' => $lastWeekUsers,
+                'chart' => $chart->build(),
+            ]);
         } else{
             $user = auth()->user();
             $pendingTasks = 0;
