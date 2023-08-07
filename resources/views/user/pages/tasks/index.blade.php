@@ -25,9 +25,6 @@
                     <table class="table table-striped" id="table-1">
                       <thead>
                         <tr>
-                          <th>
-                            #
-                          </th>
                           <th>Name</th>
                           <th>Description</th>
                           <th>Status</th>
@@ -39,7 +36,6 @@
                       <tbody>
                         @foreach ($tasks as $task)
                         <tr>
-                            <td></td>
                             <td>{{ $task->name }}</td>
                             <td>
                                 {{$task->description}}
@@ -91,6 +87,3 @@
     </section>
     </div>
 @endsection
-@push('styles')
-  <link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
-@endpush

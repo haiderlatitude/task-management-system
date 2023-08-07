@@ -82,6 +82,7 @@ Route::middleware('auth')->group(function () {
 
         // Reports
         Route::get('/weekly-report', [ReportController::class, 'weeklyReport']);
+        Route::post('/weekly-report', [ReportController::class, 'weeklyReport']);
         Route::get('/monthly-report', [ReportController::class, 'monthlyReport']);
         Route::post('/monthly-report', [ReportController::class, 'monthlyReport']);
         Route::get('/yearly-report', [ReportController::class, 'yearlyReport']);

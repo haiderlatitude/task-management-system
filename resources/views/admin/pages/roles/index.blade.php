@@ -31,9 +31,6 @@
                     <table class="table table-striped" id="table-1">
                       <thead>
                         <tr>
-                          <th>
-                            #
-                          </th>
                           <th>Name</th>
                           <th>Permissions</th>
                           <th>Actions</th>
@@ -42,7 +39,6 @@
                       <tbody>
                         @foreach ($roles as $role)
                         <tr>
-                            <td></td>
                             <td>{{ $role->name }}</td>
                             <td>
                                 @if ($role->permissions->first() == null)
@@ -74,6 +70,3 @@
     </section>
     </div>
 @endsection
-@push('styles')
-  <link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
-@endpush

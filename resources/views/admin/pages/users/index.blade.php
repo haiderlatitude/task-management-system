@@ -39,9 +39,6 @@
                         <table class="table table-striped" id="table-1">
                           <thead>
                             <tr>
-                              <th>
-                                #
-                              </th>
                               <th>Name</th>
                               <th>Email</th>
                               <th>Date of Birth</th>
@@ -56,7 +53,6 @@
                           <tbody>
                             @foreach ($users as $user)
                             <tr>
-                                <td></td>
                                 <td>
                                   {{$user->name}}
                                 </td>
@@ -134,6 +130,3 @@
           </section>
     </div>
 @endsection
-@push('styles')
-<link rel="stylesheet" href="{{asset('customCSS/rowNumber.css')}}">
-@endpush

@@ -19,6 +19,7 @@ class YearlyTasksBarChart
                 array_push($this->years, substr((string)$item, 0, 4));
             }
         }
+        unset($yearsCollection);
     }
 
     public function build(): \ArielMejiaDev\LarapexCharts\BarChart
@@ -30,8 +31,8 @@ class YearlyTasksBarChart
             array_push($completedData, Task::yearlyTasksCompleted($year)->count());
         }
         return $this->chart->barChart()
-            ->addData('Created', [...$createdData])
-            ->addData('Completed', [...$completedData])
+            ->addData('Created', $createdData)
+            ->addData('Completed', $completedData)
             ->setXAxis($this->years);
     }
 }

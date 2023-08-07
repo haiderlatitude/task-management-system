@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function weeklyReport(WeeklyTasksBarChart $chart) {
+    public function weeklyReport(Request $request, WeeklyTasksBarChart $chart) {
         $tasksCreatedThisWeek = Task::weeklyTasksCreated();
         $tasksCompletedThisWeek = Task::weeklyTasksCompleted();
 
@@ -22,6 +22,7 @@ class ReportController extends Controller
             'timePeriod' => 'this week',
             'category' => 'week',
             'message' => null,
+            'completedTasksCheckbox' => $request->completedTasksCheckbox,
             'chart' => $chart->build(),
         ]);
     }
@@ -48,12 +49,14 @@ class ReportController extends Controller
             'timePeriod' => $monthNumber ? date('F', mktime(0, 0, 0, $monthNumber, 1)):'this month',
             'category' => 'month',
             'message' => $message,
+            'completedTasksCheckbox' => $request->completedTasksCheckbox,
             'chart' => $chart->build(),
         ]);
     }
 
     public function yearlyReport(Request $request, YearlyTasksBarChart $chart) {
-        $year = (int)$request->year; $message = null;
+        $year = (int)$request->year; 
+        $message = null;
         $startYear = (int)substr(Task::find(1)->created_at, 0, 4);
         $endYear = (int)substr(now(), 0, 4);
         if ($year == null) {
@@ -77,6 +80,7 @@ class ReportController extends Controller
             'timePeriod' => $year,
             'category' => 'year',
             'message' => $message,
+            'completedTasksCheckbox' => $request->completedTasksCheckbox,
             'chart' => $chart->build(),
         ]);
     }
