@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Charts\AdminDashboardBarChart;
 use App\Charts\AdminDashboardLineChart;
+use App\Charts\UserDashboardLineChart;
 use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
-    public function index(AdminDashboardLineChart $lineChart, AdminDashboardBarChart $barChart)
+    public function index(AdminDashboardLineChart $lineChart, AdminDashboardBarChart $barChart, UserDashboardLineChart $userLineChart)
     {
         if (Auth::user()->hasRole('admin')) {
             $tasks = Task::all();
@@ -35,7 +36,12 @@ class DashboardController extends Controller
                 else
                     $completedTasks++;
             }
-            return view('user.dashboard', compact('user', 'pendingTasks', 'completedTasks'));
+            return view('user.dashboard', [
+                'user' => $user,
+                'pendingTasks' => $pendingTasks,
+                'completedTasks' => $completedTasks,
+                'lineChart' => $userLineChart->build($user),
+            ]);
         }
     }
 }
