@@ -77,6 +77,17 @@
                 </ul>
             </li>
         </ul>
+        <ul class="sidebar-menu">
+            <li class="menu-header">Reports</li>
+            <li>
+                <a class="menu-toggle nav-link has-dropdown cursor-pointer"><i data-feather="clipboard"></i><span>Reports</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="/users/{{auth()->user()->name}}/weekly-report">Weekly</a></li>
+                    <li><a class="nav-link" href="/users/{{auth()->user()->name}}/monthly-report">Monthly</a></li>
+                    <li><a class="nav-link" href="/users/{{auth()->user()->name}}/yearly-report">Yearly</a></li>
+                </ul>
+            </li>
+        </ul>
         @endif
         <ul class="sidebar-menu">
             <li class="menu-header">Settings</li>

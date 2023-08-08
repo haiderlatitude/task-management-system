@@ -48,22 +48,17 @@
           <div class="row">
             <div class="col-12">
               <div class="card">
-                <div class="card-header flex justify-between">
+                <div class="card-header">
                   <div>
                     <h4 class="mt-2"><b>{{ucfirst($category).'ly'}} Report ({{$timePeriod}})</b></h4>
-                    <p class="text-xs text-gray-400">This report by default shows the tasks CREATED in {{$timePeriod}}</p>
+                    <p class="text-xs text-gray-500">This report by default shows the PENDING tasks in {{$timePeriod}}</p>
                   </div>
-                    <form action="/admin/export-{{$category}}ly-report" method="POST">@csrf
-                      <input type="hidden" name="tasks" value="{{$tasks}}">
-                      <input type="hidden" name="timePeriod" value="{{$timePeriod}}">
-                      <button class="bg-blue-500 hover:bg-blue-600 focus:bg-blue-600 px-3 py-2 text-white text-sm rounded-sm mx-2">Export</button>
-                    </form>
                 </div>
                 <div class="card-body">
                     <div class="flex justify-between">
                         <div class="tasksData text-dark inline">
                             <div class="text-dark">
-                                Number of tasks created in {{$timePeriod}}: <b>{{$tasks->count()}}</b>
+                                Number of tasks assigned in {{$timePeriod}}: <b>{{$tasks->count()}}</b>
                             </div>
                             <div class="text-dark my-4">
                                 Number of tasks completed in {{$timePeriod}}: <b>{{$tasksCompleted->count()}}</b>
@@ -75,7 +70,7 @@
                         <div class="w-3/6">
                           @if(in_array($category, ['month', 'year']))
                             <div class="w-5/6">
-                              <form action="/admin/{{$category.'ly'}}-report" method="POST" class="inline w-3/6">@csrf
+                              <form action="/users/{{auth()->user()->name}}/{{$category.'ly'}}-report" method="POST" class="inline w-3/6">@csrf
                                 <label for="{{$category}}">{{ucfirst($category)}}:</label><br>
                                 <input type="text" class="border border-gray-100 rounded-sm focus:outline-none px-2 py-2 mb-3 w-full" name="{{$category}}"
                                         value="@if($category == 'month' && $timePeriod != 'this month'){{(int)date('m', strtotime($timePeriod))}}@elseif(!in_array($timePeriod, ['this week', 'this month', 'this year'])){{$timePeriod}}@endif"

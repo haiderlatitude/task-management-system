@@ -5,7 +5,7 @@ namespace App\Charts;
 use App\Models\User;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 
-class UserDashboardBarChart
+class UserMonthlyTasksBarChart
 {
     protected $chart;
 
@@ -17,8 +17,6 @@ class UserDashboardBarChart
     public function build(User $user): \ArielMejiaDev\LarapexCharts\BarChart
     {
         return $this->chart->barChart()
-            ->setTitle('Tasks Analysis During current year')
-            ->setSubtitle('Assigned VS Completed')
             ->addData('Assigned', [
                 User::monthlyTasksAssigned($user, 1)->count(),
                 User::monthlyTasksAssigned($user, 2)->count(),

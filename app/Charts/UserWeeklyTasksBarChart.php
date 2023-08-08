@@ -2,6 +2,7 @@
 
 namespace App\Charts;
 
+use App\Models\User;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 class UserWeeklyTasksBarChart
@@ -13,13 +14,25 @@ class UserWeeklyTasksBarChart
         $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\BarChart
+    public function build(User $user): \ArielMejiaDev\LarapexCharts\BarChart
     {
         return $this->chart->barChart()
-            ->setTitle('San Francisco vs Boston.')
-            ->setSubtitle('Wins during season 2021.')
-            ->addData('San Francisco', [6, 9, 3, 4, 10, 8])
-            ->addData('Boston', [7, 3, 8, 2, 6, 4])
-            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
+            ->addData('Assigned', [
+                $user->tasks()->wherePivot('assigned_day_id', '=', 1)->count(),
+                $user->tasks()->wherePivot('assigned_day_id', '=', 2)->count(),
+                $user->tasks()->wherePivot('assigned_day_id', '=', 3)->count(),
+                $user->tasks()->wherePivot('assigned_day_id', '=', 4)->count(),
+                $user->tasks()->wherePivot('assigned_day_id', '=', 5)->count(),
+                $user->tasks()->wherePivot('assigned_day_id', '=', 6)->count(),
+            ])
+            ->addData('Completed', [
+                $user->tasks->where('completed_day_id', '=', 1)->count(),
+                $user->tasks->where('completed_day_id', '=', 2)->count(),
+                $user->tasks->where('completed_day_id', '=', 3)->count(),
+                $user->tasks->where('completed_day_id', '=', 4)->count(),
+                $user->tasks->where('completed_day_id', '=', 5)->count(),
+                $user->tasks->where('completed_day_id', '=', 6)->count(),
+            ])
+            ->setXAxis(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
     }
 }
