@@ -76,9 +76,9 @@
               </div>
               <div class="card-body">
                 <div>
-                  {!! $lineChart->container() !!}
-                  <script src="{{ $lineChart->cdn() }}"></script>
-                  {!! $lineChart->script() !!}
+                  {!! $barChart->container() !!}
+                  <script src="{{ $barChart->cdn() }}"></script>
+                  {!! $barChart->script() !!}
                 </div>
               </div>
             </div>
@@ -95,9 +95,6 @@
                     <table class="table table-striped" id="table-1">
                       <thead>
                         <tr>
-                          <th class="text-center">
-                            #
-                          </th>
                           <th>Name</th>
                           <th>Description</th>
                           <th>Status</th>
@@ -106,9 +103,6 @@
                       <tbody>
                         @foreach ($user->tasks as $task)
                         <tr>
-                            <td>
-                              {{$task->id}}
-                            </td>
                             <td>{{$task->name}}</td>
                             <td>
                               {{$task->description}}

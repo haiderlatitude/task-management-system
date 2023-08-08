@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('task_user', function (Blueprint $table) {
             $table->unsignedBigInteger('task_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('assigned_day_id');
             $table->foreign('task_id')->references('id')->on('tasks')->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('assigned_day_id')->references('id')->on('days')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

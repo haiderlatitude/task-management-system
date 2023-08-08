@@ -14,7 +14,7 @@ class DaysSeeder extends Seeder
     public function run(): void
     {
         Day::create(['name' => 'Monday']);
-        Day::create(['name' => 'Tuseday']);
+        Day::create(['name' => 'Tuesday']);
         Day::create(['name' => 'Wednesday']);
         Day::create(['name' => 'Thursday']);
         Day::create(['name' => 'Friday']);

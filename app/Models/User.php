@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -51,10 +53,46 @@ class User extends Authenticatable
     ];
 
     public function tasks() : BelongsToMany {
-        return $this->belongsToMany(Task::class);
+        return $this->belongsToMany(Task::class)->withTimestamps()->withPivot('assigned_day_id');
     }
 
     public function createdTasks() {
         return $this->hasMany(Task::class);
+    }
+
+    public function scopeWeeklyTasksAssigned($query, $user) {
+        return $user->tasks()->wherePivotBetween('created_at', [Carbon::now()->startOfDay()->startOfWeek(), Carbon::now()->endOfWeek()]);
+    }
+
+    public function scopeWeeklyTasksCompleted($query, $user) {
+        return $user->tasks->whereBetween('completed_at', [Carbon::now()->startOfDay()->startOfWeek(), Carbon::now()->endOfWeek()]);
+    }
+
+    public function scopeMonthlyTasksAssigned($query,$user, $month) {
+        if($month == null)
+            return $user->tasks()->wherePivotBetween('created_at', [Carbon::now()->startOfMonth() , Carbon::now()->endOfMonth()]);
+
+        return $user->tasks()->wherePivotBetween('created_at', [Carbon::now()->day(1)->month($month)->startOfMonth(), Carbon::now()->day(1)->month($month)->endOfMonth()]);
+    }
+
+    public function scopeMonthlyTasksCompleted($query,$user, $month) {
+        if($month == null)
+            return $user->tasks->whereBetween('completed_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+
+        return $user->tasks->whereBetween('completed_at', [Carbon::now()->day(1)->month($month)->startOfMonth(), Carbon::now()->day(1)->month($month)->endOfMonth()]);
+    }
+
+    public function scopeYearlyTasksAssigned($query,$user, $year) {
+        if($year == null)
+            return $user->tasks()->wherePivotBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()]);
+
+        return $user->tasks()->wherePivotBetween('created_at', [Carbon::now()->day(1)->year($year)->startOfYear(), Carbon::now()->day(1)->year($year)->endOfYear()]);
+    }
+
+    public function scopeYearlyTasksCompleted($query,$user, $year) {
+        if($year == null)
+            return $user->tasks->whereBetween('completed_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()]);
+
+        return $user->tasks->whereBetween('completed_at', [Carbon::now()->day(1)->year($year)->startOfYear(), Carbon::now()->day(1)->year($year)->endOfYear()]);
     }
 }

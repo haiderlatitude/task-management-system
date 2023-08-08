@@ -9,9 +9,6 @@
             <table class="table table-striped" id="table-1">
               <thead>
                 <tr>
-                  <th class="text-center">
-                    #
-                  </th>
                   <th>Name</th>
                   <th>Description</th>
                   <th>Status</th>
@@ -23,10 +20,7 @@
               <tbody>
                 @foreach ($tasks as $task)
                 <tr>
-                    <td>
-                      {{$task->id}}
-                    </td>
-                    <td>{{ $task->name}}</td>
+                    <td>{{$task->name}}</td>
                     <td>
                       {{$task->description}}
                     </td>

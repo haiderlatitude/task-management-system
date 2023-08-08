@@ -47,7 +47,7 @@ class TaskController extends Controller
         try {
             $task = Task::findOrFail($req->task);
             $user = User::findOrFail($req->user);
-            $task->users()->attach($user);
+            $task->users()->attach($user, ['assigned_day_id' => Day::where('name', now()->format('l'))->first()->id]);
             $user->notify(new TaskAssigned($task->name));
             return back()->with('message', 'Task has been assigned successfully!');
         } catch (\Exception $e) {

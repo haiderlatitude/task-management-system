@@ -1,14 +1,15 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleNPermissionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserReportController;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
@@ -81,12 +82,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/assign-permission-to-role', [RoleNPermissionController::class, 'assignPermissionToRole']);
 
         // Reports
-        Route::get('/weekly-report', [ReportController::class, 'weeklyReport']);
-        Route::post('/weekly-report', [ReportController::class, 'weeklyReport']);
-        Route::get('/monthly-report', [ReportController::class, 'monthlyReport']);
-        Route::post('/monthly-report', [ReportController::class, 'monthlyReport']);
-        Route::get('/yearly-report', [ReportController::class, 'yearlyReport']);
-        Route::post('/yearly-report', [ReportController::class, 'yearlyReport']);
+        Route::get('/weekly-report', [AdminReportController::class, 'weeklyReport']);
+        Route::post('/weekly-report', [AdminReportController::class, 'weeklyReport']);
+        Route::get('/monthly-report', [AdminReportController::class, 'monthlyReport']);
+        Route::post('/monthly-report', [AdminReportController::class, 'monthlyReport']);
+        Route::get('/yearly-report', [AdminReportController::class, 'yearlyReport']);
+        Route::post('/yearly-report', [AdminReportController::class, 'yearlyReport']);
         Route::post('/export-weekly-report', [PdfController::class, 'exportWeeklyReport']);
         Route::post('/export-monthly-report', [PdfController::class, 'exportMonthlyReport']);
         Route::post('/export-yearly-report', [PdfController::class, 'exportYearlyReport']);
@@ -98,6 +99,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/{username}/my-roles', [UserController::class, 'userRoles']);
         Route::get('/{username}/my-permissions', [UserController::class, 'userPermissions']);
         Route::post('/{username}/update-details', [TaskController::class, 'updateTaskStatus']);
+
+        // User Reports
+        Route::get('/{username}/weekly-report', [UserReportController::class, 'weeklyReport']);
+        Route::post('/{username}/weekly-report', [UserReportController::class, 'weeklyReport']);
+        Route::get('/{username}/monthly-report', [UserReportController::class, 'monthlyReport']);
+        Route::post('/{username}/monthly-report', [UserReportController::class, 'monthlyReport']);
+        Route::get('/{username}/yearly-report', [UserReportController::class, 'yearlyReport']);
+        Route::post('/{username}/yearly-report', [UserReportController::class, 'yearlyReport']);
     });
 
     // Profile Routes

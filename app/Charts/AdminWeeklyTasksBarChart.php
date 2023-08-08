@@ -5,7 +5,7 @@ namespace App\Charts;
 use App\Models\Task;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 
-class WeeklyTasksBarChart
+class AdminWeeklyTasksBarChart
 {
     protected $chart;
 

@@ -153,7 +153,6 @@
                             @else
                               @foreach ($tasks as $task)
                                 <tr>
-                                  <td></td>
                                   <td>{{$task->name}}</td>
                                   <td>
                                     {{$task->description}}
