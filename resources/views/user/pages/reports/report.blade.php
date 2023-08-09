@@ -58,13 +58,16 @@
                     <div class="flex justify-between">
                         <div class="tasksData text-dark inline">
                             <div class="text-dark">
-                                Number of tasks assigned in {{$timePeriod}}: <b>{{$tasks->count()}}</b>
+                                Number of tasks pending in {{$timePeriod}}: <b>{{count($tasks)}}</b>
                             </div>
                             <div class="text-dark my-4">
                                 Number of tasks completed in {{$timePeriod}}: <b>{{$tasksCompleted->count()}}</b>
                             </div>
                             <div class="text-dark my-4">
-                              Completion to Creation ratio: <b>{{round($tasksCompleted->count()/($tasks->count()?:1) *100, 2)}}%</b>
+                              Total number of tasks in {{$timePeriod}}: <b>{{count($tasks)+$tasksCompleted->count()}}</b>
+                            </div>
+                            <div class="text-dark my-4">
+                              Completion to Creation ratio: <b>{{round($tasksCompleted->count()/(count($tasks)?:1) *100, 2)}}%</b>
                             </div>
                         </div>
                         <div class="w-3/6">
