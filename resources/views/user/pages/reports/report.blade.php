@@ -67,7 +67,7 @@
                               Total number of tasks in {{$timePeriod}}: <b>{{count($tasks)+$tasksCompleted->count()}}</b>
                             </div>
                             <div class="text-dark my-4">
-                              Completion to Creation ratio: <b>{{round($tasksCompleted->count()/(count($tasks)?:1) *100, 2)}}%</b>
+                              Completion Rate: <b>{{round($tasksCompleted->count()/((count($tasks)+count($tasksCompleted))?:1) *100, 2)}}%</b>
                             </div>
                         </div>
                         <div class="w-3/6">
