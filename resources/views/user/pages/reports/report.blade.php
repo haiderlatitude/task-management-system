@@ -51,7 +51,7 @@
                 <div class="card-header">
                   <div>
                     <h4 class="mt-2"><b>{{ucfirst($category).'ly'}} Report ({{$timePeriod}})</b></h4>
-                    <p class="text-xs text-gray-500">This report by default shows the pending tasks in {{$timePeriod}}</p>
+                    <p class="text-xs text-gray-500">This report by default shows the PENDING tasks in {{$timePeriod}}</p>
                   </div>
                 </div>
                 <div class="card-body">
