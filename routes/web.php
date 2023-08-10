@@ -10,7 +10,6 @@ use App\Http\Controllers\RoleNPermissionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReportController;
-use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
