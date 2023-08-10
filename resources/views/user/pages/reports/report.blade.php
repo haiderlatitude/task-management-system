@@ -156,7 +156,7 @@
                                     {{$task->description}}
                                   </td>
                                   <td>
-                                      {{ucwords(str_replace('-', ' ', $task->status->name))}}
+                                    {{ucwords(str_replace('-', ' ', $task->status->name))}}
                                   </td>
                                   <td>
                                     {{date('Y', strtotime($task->created_at))}}

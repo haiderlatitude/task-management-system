@@ -34,7 +34,11 @@
           {{date('d m Y', strtotime($task->due_date))}}
         </td>
         <td style="text-align: start; line-height: 25px;">
-            {{date('d m Y', strtotime($task->completed_at))}}
+            @if ($task->completed_at == null)
+              Pending
+            @else
+              {{date('d m Y', strtotime($task->completed_at))}}
+            @endif
         </td>
       </tr>
     @endforeach
