@@ -13,7 +13,6 @@
                     <option value="{{$role->id}}">{{$role->name}}</option>
                 @endforeach
             </select>
-            <p class="mx-3 text-xs">*Default Role: User</p>
         </div>
     </div>
 </div>

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,7 +33,7 @@ Route::get('/registerForm', function () {
     return view('admin.auth.register');
 });
 
-Route::get('/reset-password', function(){
+Route::get('/reset-password', function () {
     return view('auth.forgot-password');
 });
 
