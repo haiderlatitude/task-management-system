@@ -51,7 +51,7 @@
                 <div class="card-header flex justify-between">
                   <div>
                     <h4 class="mt-2"><b>{{ucfirst($category).'ly'}} Report ({{$timePeriod}})</b></h4>
-                    <p class="text-xs text-gray-400">This report by default shows the tasks CREATED in {{$timePeriod}}</p>
+                    <p class="text-xs text-gray-400">This report by default shows all tasks in {{$timePeriod}}</p>
                   </div>
                     <form action="/admin/export-{{$category}}ly-report" method="POST">@csrf
                       <input type="hidden" name="tasks" value="{{$tasks}}">
