@@ -62,9 +62,15 @@ class TaskController extends Controller
             $task = Task::findOrFail($request->taskid);
             $task->status_id = $request->statusid;
 
+            if($task->status_id == 2){
+                $task->start_time = now();
+            }
+
             // If task status_id is 3 (i.e complete)
             if ($task->status_id == 3) {
                 $task->completed_at = now();
+                if($task->time_spent == null)
+                    $task->time_spent = Carbon::parse($task->start_time)->diff($task->completed_at)->format('%d Days, %h:%i:%s');
                 $task->completed_day_id = Day::where('name', now()->format('l'))->first()->id;
                 User::find(1)->notify(new TaskComplete($request->user()->name, $task->name)); // Notify admin
             }
@@ -72,7 +78,7 @@ class TaskController extends Controller
 
             return back()->with('message', 'Task Status has been updated successfully!');
         } catch (\Exception $e) {
-            return back()->withErrors('Oops! Something went wrong!');
+            return back()->withErrors($e->getMessage());
         }
     }
 

@@ -32,6 +32,7 @@
                               <th>Status</th>
                               <th>Due Date</th>
                               <th>Complete Date</th>
+                              <th>Time Spent</th>
                               <th>Assigned To</th>
                               <th>Actions</th>
                             </tr>
@@ -73,6 +74,13 @@
                                     <div class="bg-danger inline rounded-xl text-white px-3 py-2">
                                       {{date('d m Y', strtotime($task->completed_at))}}
                                     </div>
+                                  @endif
+                                </td>
+                                <td>
+                                  @if ($task->time_spent == null)
+                                    -
+                                  @else
+                                    {{$task->time_spent}}
                                   @endif
                                 </td>
                                 <td>

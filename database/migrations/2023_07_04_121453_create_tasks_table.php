@@ -23,7 +23,9 @@ return new class extends Migration
             $table->foreign('created_day_id')->references('id')->on('days')->cascadeOnDelete();
             $table->unsignedBigInteger('completed_day_id')->nullable();
             $table->foreign('completed_day_id')->references('id')->on('days')->cascadeOnDelete();
+            $table->dateTime('start_time')->nullable();
             $table->dateTime('due_date');
+            $table->string('time_spent')->nullable();
             $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
