@@ -2,7 +2,6 @@
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
             <a href="/dashboard">
-                <img src="{{asset('logo/2btech_logo.png')}}" width="30" height="30" class="inline">
                 <span class="logo-name">
                     TMS
                 </span>

@@ -45,44 +45,53 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:admin')->prefix('admin')->group(function () {
         // Tasks
-        Route::get('/all-tasks', [TaskController::class, 'index']);
-        Route::get('/add-task', [TaskController::class, 'formToAddTask']);
-        Route::get('/task-form', [TaskController::class, 'formToAssignTask']);
-        Route::post('/store-task', [TaskController::class, 'store']);
-        Route::get('/edit-task/{id}', [TaskController::class, 'editTask']);
-        Route::put('/store-edited-task', [TaskController::class, 'storeEditedTask']);
-        Route::post('/assign-task', [TaskController::class, 'assignTask']);
-        Route::post('/update-task-status', [TaskController::class, 'updateTaskStatus']);
+        Route::controller(TaskController::class)->group(function () {
+            Route::get('/all-tasks', 'index');
+            Route::get('/add-task', 'formToAddTask');
+            Route::get('/task-form', 'formToAssignTask');
+            Route::post('/store-task', 'store');
+            Route::get('/edit-task/{id}', 'editTask');
+            Route::put('/store-edited-task', 'storeEditedTask');
+            Route::post('/assign-task', 'assignTask');
+            Route::post('/update-task-status', 'updateTaskStatus');
+        });
 
         // Admin manages Users
-        Route::get('/all-users', [AdminController::class, 'index']);
-        Route::get('/add-user', [AdminController::class, 'addUser']);
-        Route::post('/store-user', [AdminController::class, 'storeUser']);
-        Route::get('/edit-user/{id}', [AdminController::class, 'editUser']);
-        Route::put('/store-edited-user', [AdminController::class, 'storeEditedUser']);
-        Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser']);
-        Route::get('/restore-user/{id}', [AdminController::class, 'restoreUser']);
-        Route::post('/deleted-or-active-users', [AdminController::class, 'deletedOrActiveUsers']);
+        Route::controller(AdminController::class)->group(function () {
+            Route::get('/all-users', 'index');
+            Route::get('/add-user', 'addUser');
+            Route::post('/store-user', 'storeUser');
+            Route::get('/edit-user/{id}', 'editUser');
+            Route::put('/store-edited-user', 'storeEditedUser');
+            Route::get('/delete-user/{id}', 'deleteUser');
+            Route::get('/restore-user/{id}', 'restoreUser');
+            Route::post('/deleted-or-active-users', 'deletedOrActiveUsers');
+        });
 
-        // Roles and Permissions 
-        Route::get('/all-roles', [RoleNPermissionController::class, 'allRoles']);
-        Route::get('/add-role', [RoleNPermissionController::class, 'addRole']);
-        Route::get('/edit-role/{roleId}', [RoleNPermissionController::class, 'editRole']);
-        Route::post('/store-role', [RoleNPermissionController::class, 'store']);
-        Route::post('/store-edited-role/{roleId}', [RoleNPermissionController::class, 'storeEditedRole']);
-        Route::get('/assign-role', [RoleNPermissionController::class, 'assignRole']);
-        Route::post('/assign-role-to-user', [RoleNPermissionController::class, 'assignRoleToUser']);
-        Route::get('/all-permissions', [RoleNPermissionController::class, 'allPermissions']);
-        Route::get('/assign-permission', [RoleNPermissionController::class, 'assignPermission']);
-        Route::post('/assign-permission-to-role', [RoleNPermissionController::class, 'assignPermissionToRole']);
+        // Roles and Permissions
+        Route::controller(RoleNPermissionController::class)->group(function () {
+            Route::get('/all-roles', 'allRoles');
+            Route::get('/add-role', 'addRole');
+            Route::get('/edit-role/{roleId}', 'editRole');
+            Route::post('/store-role', 'store');
+            Route::post('/store-edited-role/{roleId}', 'storeEditedRole');
+            Route::get('/assign-role', 'assignRole');
+            Route::post('/assign-role-to-user', 'assignRoleToUser');
+            Route::get('/all-permissions', 'allPermissions');
+            Route::get('/assign-permission', 'assignPermission');
+            Route::post('/assign-permission-to-role', 'assignPermissionToRole');
+        });
 
         // Reports
-        Route::get('/weekly-report', [AdminReportController::class, 'weeklyReport']);
-        Route::post('/weekly-report', [AdminReportController::class, 'weeklyReport']);
-        Route::get('/monthly-report', [AdminReportController::class, 'monthlyReport']);
-        Route::post('/monthly-report', [AdminReportController::class, 'monthlyReport']);
-        Route::get('/yearly-report', [AdminReportController::class, 'yearlyReport']);
-        Route::post('/yearly-report', [AdminReportController::class, 'yearlyReport']);
+        Route::controller(AdminReportController::class)->group(function () {
+            Route::get('/weekly-report', 'weeklyReport');
+            Route::post('/weekly-report', 'weeklyReport');
+            Route::get('/monthly-report', 'monthlyReport');
+            Route::post('/monthly-report', 'monthlyReport');
+            Route::get('/yearly-report', 'yearlyReport');
+            Route::post('/yearly-report', 'yearlyReport');
+        });
+
         Route::post('/export-weekly-report', [PdfController::class, 'exportWeeklyReport']);
         Route::post('/export-monthly-report', [PdfController::class, 'exportMonthlyReport']);
         Route::post('/export-yearly-report', [PdfController::class, 'exportYearlyReport']);
@@ -96,12 +105,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/{username}/update-details', [TaskController::class, 'updateTaskStatus']);
 
         // User Reports
-        Route::get('/{username}/weekly-report', [UserReportController::class, 'weeklyReport']);
-        Route::post('/{username}/weekly-report', [UserReportController::class, 'weeklyReport']);
-        Route::get('/{username}/monthly-report', [UserReportController::class, 'monthlyReport']);
-        Route::post('/{username}/monthly-report', [UserReportController::class, 'monthlyReport']);
-        Route::get('/{username}/yearly-report', [UserReportController::class, 'yearlyReport']);
-        Route::post('/{username}/yearly-report', [UserReportController::class, 'yearlyReport']);
+        Route::controller(UserReportController::class)->group(function () {
+            Route::get('/{username}/weekly-report', 'weeklyReport');
+            Route::post('/{username}/weekly-report', 'weeklyReport');
+            Route::get('/{username}/monthly-report', 'monthlyReport');
+            Route::post('/{username}/monthly-report', 'monthlyReport');
+            Route::get('/{username}/yearly-report', 'yearlyReport');
+            Route::post('/{username}/yearly-report', 'yearlyReport');
+        });
     });
 
     // Profile Routes

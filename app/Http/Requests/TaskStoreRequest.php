@@ -27,7 +27,7 @@ class TaskStoreRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'due_date' => 'required|date',
+            'due_date' => 'required|date|after:today',
         ];
     }
 }

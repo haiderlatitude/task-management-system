@@ -27,7 +27,7 @@ class TaskController extends Controller
         return view('admin.pages.tasks.index', compact('tasks', 'statuses'));
     }
 
-    // View for assinging task to user
+    // View for assigning task to user
     public function formToAssignTask()
     {
         $tasks = Task::all();
@@ -41,7 +41,7 @@ class TaskController extends Controller
         return view('admin.pages.tasks.add');
     }
 
-    // Assign Task 
+    // Assign Task
     public function assignTask(TaskAssignRequest $req)
     {
         try {
@@ -85,10 +85,6 @@ class TaskController extends Controller
     // Store task details
     public function store(TaskStoreRequest $req)
     {
-        $req->validate([
-            'due_date' => 'after:today',
-        ]);
-        // dd(Day::where('name', now()->format('l'))->first()->id, now()->dayOfWeek);
         Task::create([
             'name' => $req->name,
             'description' => $req->description,
