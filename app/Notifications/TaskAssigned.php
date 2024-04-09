@@ -31,19 +31,6 @@ class TaskAssigned extends Notification
     }
 
     /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
-    {
-        return (new MailMessage)
-                    ->subject('New Task Assigned')
-                    ->greeting('Dear User,')
-                    ->line('You have been assigned a new task.')
-                    ->action('View Task Details', url('https://localhost:8000/loginForm'))
-                    ->line('Thank you!');
-    }
-
-    /**
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>

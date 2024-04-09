@@ -27,7 +27,7 @@ class TaskController extends Controller
         return view('admin.pages.tasks.index', compact('tasks', 'statuses'));
     }
 
-    // View for assigning task to user
+    // View for assigning the task to user
     public function formToAssignTask()
     {
         $tasks = Task::all();
@@ -47,7 +47,8 @@ class TaskController extends Controller
         try {
             $task = Task::findOrFail($req->task);
             $user = User::findOrFail($req->user);
-            $task->users()->attach($user, ['assigned_day_id' => Day::where('name', now()->format('l'))->first()->id]);
+            $dayId = Day::where('name', now()->format('l'))->first()->id;
+            $task->users()->attach($user, ['assigned_day_id' => $dayId]);
             $user->notify(new TaskAssigned($task->name));
             return back()->with('message', 'Task has been assigned successfully!');
         } catch (\Exception $e) {

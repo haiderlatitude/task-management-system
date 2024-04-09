@@ -23,15 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/loginForm', function () {
+Route::get('/login', function () {
     return view('admin.auth.login');
-});
-Route::get('/registerForm', function () {
-    return view('admin.auth.register');
-});
+})->name('login');
 
 Route::get('/reset-password', function () {
     return view('auth.forgot-password');
@@ -127,6 +121,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/read-all-notifications', [NotificationController::class, 'readAllNotifications']);
     Route::post('/delete-all-notifications', [NotificationController::class, 'deleteAllNotifications']);
     Route::delete('/delete-notification', [NotificationController::class, 'deleteNotification']);
+});
+
+Route::fallback(function () {
+    return to_route('login');
 });
 
 require __DIR__ . '/auth.php';
