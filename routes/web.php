@@ -112,9 +112,6 @@ Route::middleware('auth')->group(function () {
     // Profile Routes
     Route::get('/edit-profile', [ProfileController::class, 'edit']);
     Route::patch('/update-profile', [ProfileController::class, 'update']);
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Notification Routes
     Route::post('/read-notification', [NotificationController::class, 'readNotification']);
